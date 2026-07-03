@@ -1,811 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MadeByLA — AI Creative Freelancer Philippines</title>
-  <meta name="description" content="MadeByLA is a Filipino AI Creative Freelancer specializing in AI Image Enhancement, AI Persona Creation, Content Creation, Video Editing, Social Media Management, and Graphic Design. Based in the Philippines, serving global clients." />
-  <meta name="keywords" content="AI freelancer Philippines, AI content creator Philippines, AI image enhancement, AI influencer creator, video editor Philippines, social media manager Philippines, graphic designer Philippines, hire AI freelancer, Filipino freelancer, MadeByLA" />
-  <meta name="author" content="L.A. Evangelista — MadeByLA" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://madebyla.netlify.app" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Made by LA | Creative Portfolio</title>
+    
+    <!-- Google Fonts for High-End Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://madebyla.netlify.app" />
-  <meta property="og:title" content="MadeByLA — AI Creative Freelancer Philippines" />
-  <meta property="og:description" content="AI-powered creative services — content creation, video editing, AI persona development & more. Based in Philippines, serving global clients." />
-  <meta property="og:image" content="https://madebyla.netlify.app/assets/thumbnail.png" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://madebyla.netlify.app" />
-  <meta name="twitter:title" content="MadeByLA — AI Creative Freelancer Philippines" />
-  <meta name="twitter:description" content="AI-powered creative services — content creation, video editing, AI persona development & more. Based in Philippines, serving global clients." />
-  <meta name="twitter:image" content="https://madebyla.netlify.app/assets/thumbnail.png" />
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 300vh;
+        }
 
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "L.A. Evangelista",
-    "alternateName": "MadeByLA",
-    "description": "Filipino AI Creative Freelancer specializing in AI content creation, video editing, AI persona development, and social media management.",
-    "url": "https://madebyla.netlify.app",
-    "sameAs": [
-      "https://linkedin.com/in/madebyla"
-    ],
-    "jobTitle": "AI Creative Freelancer",
-    "knowsAbout": ["AI Content Creation", "AI Image Enhancement", "Video Editing", "Social Media Management", "Graphic Design", "AI Persona Creation"],
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "PH",
-      "addressLocality": "Bacoor",
-      "addressRegion": "Cavite"
-    },
-    "offers": {
-      "@type": "Offer",
-      "name": "AI Creative Freelance Services",
-      "url": "https://madebyla.netlify.app/#services"
-    }
-  }
-  </script>
+        /* 3D WebGL Canvas Fixed Background */
+        #webgl-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+        /* Scroll Sections Layout */
+        section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            text-align: center;
+        }
 
-  <!-- Motion libraries: smooth scroll + scroll-driven animation -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+        /* Section 1: Hero */
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #aaaaaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #08080f;
-      --bg-card: #0d0d1a;
-      --bg-hover: #111122;
-      --accent: #3b82f6;
-      --accent-glow: rgba(59,130,246,0.18);
-      --accent-light: #93c5fd;
-      --text: #eeeef5;
-      --text-muted: rgba(238,238,245,0.45);
-      --text-dim: rgba(238,238,245,0.2);
-      --border: rgba(255,255,255,0.07);
-      --border-accent: rgba(59,130,246,0.25);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; animation: pageFadeIn 0.8s ease forwards; }
-    @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #00ffe0;
+        }
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(8,8,16,0.85); backdrop-filter: blur(16px); border-bottom: 0.5px solid var(--border); transition: background 0.3s, box-shadow 0.3s; }
-    nav.scrolled { background: rgba(8,8,15,0.98) !important; box-shadow: 0 1px 20px rgba(59,130,246,0.08); }
-    .logo { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); cursor: pointer; }
-    .logo span { color: var(--accent); }
-    .logo:hover { animation: glitch 0.4s ease; }
-    @keyframes glitch {
-      0% { text-shadow: none; transform: translate(0); }
-      10% { text-shadow: -2px 0 #3b82f6, 2px 0 #93c5fd; transform: translate(-1px,0); }
-      20% { text-shadow: 2px 0 #3b82f6, -2px 0 #93c5fd; transform: translate(1px,0); }
-      30% { text-shadow: none; transform: translate(0); }
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
+        /* Section 2: About / Skills */
+        .about-content h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
 
-    #progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(to right, #3b82f6, #93c5fd); z-index: 9999; width: 0%; transition: width 0.1s linear; }
+        .about-content p {
+            font-size: clamp(1rem, 1.8vw, 1.25rem);
+            max-width: 600px;
+            line-height: 1.6;
+            color: #cccccc;
+            font-weight: 300;
+        }
 
-    /* HERO */
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 5rem; max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-    .eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; }
-    .eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--accent); }
-    h1 { font-size: clamp(42px, 6vw, 72px); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 1.75rem; color: var(--text); }
-    h1 em { font-style: normal; color: var(--accent-light); }
-    .typewriter::after { content: '|'; animation: blink 0.8s infinite; color: var(--accent); }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-    .hero-sub { font-size: 17px; line-height: 1.75; color: var(--text-muted); max-width: 520px; margin-bottom: 3rem; }
-    .cta-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 13px 30px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-    .btn-ghost { background: transparent; color: var(--text-muted); border: 0.5px solid var(--border); padding: 13px 30px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 14px; cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-light); }
-    .scroll-hint { margin-top: 4rem; display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; }
-    .scroll-line { width: 40px; height: 0.5px; background: var(--text-dim); }
+        /* Section 3: Contact */
+        .contact-content h2 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 40px;
+            letter-spacing: -0.03em;
+        }
 
-    /* SECTIONS */
-    section { padding: 6rem 3rem; max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-    .divider { border: none; border-top: 0.5px solid var(--border); max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-    footer { position: relative; z-index: 1; }
-    .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 3rem; display: flex; align-items: center; gap: 12px; }
-    .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+        .social-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal:nth-child(1) { transition-delay: 0.05s; }
-    .reveal:nth-child(2) { transition-delay: 0.15s; }
-    .reveal:nth-child(3) { transition-delay: 0.25s; }
-    .reveal:nth-child(4) { transition-delay: 0.35s; }
-    .reveal:nth-child(5) { transition-delay: 0.45s; }
-    .reveal:nth-child(6) { transition-delay: 0.55s; }
+        .social-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
 
-    /* SERVICES */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; }
-    .service-card { background: var(--bg-card); padding: 2rem; transition: background 0.25s; position: relative; overflow: hidden; }
-    .service-card:hover { background: var(--bg-hover); }
-    .service-card:hover .service-num { color: var(--accent); }
-    .service-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 1.25rem; transition: color 0.25s; }
-    .service-icon { font-size: 28px; margin-bottom: 1rem; }
-    .service-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 0.6rem; line-height: 1.3; }
-    .service-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+        .social-links a:hover {
+            background-color: #00ffe0;
+            color: #000000;
+            border-color: #00ffe0;
+            box-shadow: 0 0 20px rgba(0, 255, 224, 0.4);
+        }
 
-    /* TOOLS */
-    .tools-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2.5rem; }
-    .tool-chip { font-family: 'Space Mono', monospace; font-size: 11px; padding: 6px 14px; border: 0.5px solid var(--border-accent); border-radius: 100px; color: var(--accent-light); background: var(--accent-glow); letter-spacing: 0.03em; transition: border-color 0.2s, color 0.2s, transform 0.2s; }
-    .tool-chip:hover { border-color: rgba(59,130,246,0.6); color: #93c5fd; transform: translateY(-2px); }
-
-    /* PORTFOLIO */
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-    .portfolio-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
-    .portfolio-card:hover { border-color: var(--border-accent); transform: translateY(-4px); }
-    .portfolio-video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; }
-    .portfolio-video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .portfolio-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.45); transition: background 0.2s; }
-    .portfolio-play:hover { background: rgba(0,0,0,0.3); }
-    .portfolio-play.playing { background: transparent; }
-    .portfolio-play.playing:hover { background: rgba(0,0,0,0.2); }
-    .play-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; transition: opacity 0.2s; }
-    .portfolio-play.playing .play-icon { opacity: 0; }
-    .portfolio-play.playing:hover .play-icon { opacity: 1; }
-    .portfolio-badge { position: absolute; top: 12px; left: 12px; font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 4px; background: rgba(59,130,246,0.15); border: 0.5px solid rgba(59,130,246,0.3); color: var(--accent-light); }
-    .portfolio-info { padding: 1.25rem 1.5rem 1.5rem; }
-    .portfolio-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
-    .portfolio-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); margin-bottom: 1rem; }
-    .portfolio-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .portfolio-tags span { font-size: 11px; font-family: 'Space Mono', monospace; padding: 3px 10px; border-radius: 4px; border: 0.5px solid var(--border); color: var(--text-dim); }
-
-    /* ABOUT */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .about-title { font-size: 30px; font-weight: 600; line-height: 1.25; margin-bottom: 1.25rem; letter-spacing: -0.01em; }
-    .about-text { font-size: 14px; line-height: 1.85; color: var(--text-muted); margin-bottom: 1.25rem; }
-    .stats-row { display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid var(--border); }
-    .stat-num { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; color: var(--accent-light); line-height: 1; }
-    .stat-label { font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.03em; }
-    .profile-card { background: var(--bg-card); border: 0.5px solid var(--border-accent); border-radius: 14px; padding: 2.5rem; text-align: center; position: relative; overflow: hidden; }
-    .avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--accent-glow); border: 1.5px solid var(--border-accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent-light); position: relative; animation: float 4s ease-in-out infinite; }
-    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-    .avatar-status { position: absolute; bottom: 3px; right: 3px; width: 12px; height: 12px; border-radius: 50%; background: #4ade80; border: 2px solid var(--bg-card); }
-    .profile-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-    .profile-role { font-size: 12px; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .available-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'Space Mono', monospace; color: #4ade80; background: rgba(74,222,128,0.08); border: 0.5px solid rgba(74,222,128,0.2); padding: 5px 12px; border-radius: 100px; }
-    .available-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-    /* PROCESS */
-    .process-grid { display: flex; align-items: center; gap: 1rem; }
-    .process-card { flex: 1; background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 14px; padding: 2rem; transition: border-color 0.3s, transform 0.3s; }
-    .process-card:hover { border-color: var(--border-accent); transform: translateY(-4px); }
-    .process-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.1em; }
-    .process-icon { font-size: 28px; margin-bottom: 1rem; }
-    .process-title { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; }
-    .process-desc { font-size: 13px; line-height: 1.7; color: var(--text-muted); }
-    .process-connector { font-size: 24px; color: var(--border-accent); flex-shrink: 0; font-family: 'Space Mono', monospace; }
-
-    /* CONTACT */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .contact-box { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 14px; padding: 2.5rem; }
-    .contact-chip { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border: 0.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'Space Grotesk', sans-serif; color: var(--text-muted); text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; background: transparent; }
-    .contact-chip:hover { border-color: var(--accent); color: var(--accent-light); background: var(--accent-glow); }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-label { display: block; font-size: 12px; font-family: 'Space Mono', monospace; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
-    .form-input { width: 100%; background: #0a0a18; border: 0.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: 'Space Grotesk', sans-serif; color: var(--text); transition: border-color 0.2s; box-sizing: border-box; }
-    .form-input:focus { outline: none; border-color: var(--accent); }
-    .form-input option { background: #0a0a18; }
-    .form-textarea { min-height: 120px; resize: vertical; }
-
-    /* FOOTER */
-    footer { text-align: center; padding: 2.5rem 3rem; border-top: 0.5px solid var(--border); font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; }
-
-    /* LOADER */
-    #loader { position: fixed; inset: 0; z-index: 10000; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; transition: opacity 0.6s ease, visibility 0.6s ease; }
-    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-logo { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); }
-    .loader-logo span { color: var(--accent); }
-    .loader-bar-track { width: 180px; height: 1px; background: var(--border); position: relative; overflow: hidden; }
-    .loader-bar-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--accent); }
-    .loader-pct { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; }
-
-    /* GRAIN */
-    #grain { position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.035; mix-blend-mode: overlay; background-repeat: repeat; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-    /* CUSTOM CURSOR */
-    #cursor-dot, #cursor-ring { position: fixed; top: 0; left: 0; border-radius: 50%; pointer-events: none; z-index: 9997; transform: translate(-50%,-50%); }
-    #cursor-dot { width: 5px; height: 5px; background: var(--accent-light); }
-    #cursor-ring { width: 32px; height: 32px; border: 1px solid var(--border-accent); transition: width 0.25s, height 0.25s, border-color 0.25s, background 0.25s; }
-    #cursor-ring.active { width: 52px; height: 52px; background: var(--accent-glow); border-color: var(--accent); }
-    @media (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
-    body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button, body.has-custom-cursor .service-card, body.has-custom-cursor .portfolio-card, body.has-custom-cursor .why-card, body.has-custom-cursor .process-card, body.has-custom-cursor .tool-chip, body.has-custom-cursor .faq-q { cursor: none; }
-
-    /* TILT */
-    .tilt-card { transition: transform 0.15s ease-out; }
-
-    @media (prefers-reduced-motion: reduce) {
-      #cursor-dot, #cursor-ring, #grain { display: none !important; }
-      #loader { transition: none; }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .hero { padding: 7rem 1.5rem 4rem; }
-      section { padding: 4rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .process-grid { flex-direction: column; }
-      .process-connector { transform: rotate(90deg); }
-      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    }
-  </style>
+        /* Fade class for initial GSAP state */
+        .gsap-fade {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
 </head>
 <body>
 
-  <div id="loader">
-    <div class="loader-logo">Made<span>By</span>LA</div>
-    <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderFill"></div></div>
-    <div class="loader-pct" id="loaderPct">00%</div>
-  </div>
-  <div id="grain"></div>
-  <div id="cursor-ring"></div>
-  <div id="cursor-dot"></div>
+    <!-- Target Canvas for Three.js -->
+    <canvas id="webgl-bg"></canvas>
 
-  <canvas id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;"></canvas>
-  <div id="progress-bar"></div>
-
-  <nav id="mainNav">
-    <div class="logo">Made<span>By</span>LA</div>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#why">Why Me</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <div class="hero">
-    <p class="eyebrow">AI-powered creative freelancer</p>
-    <h1>Content that looks<br><em>actually premium.</em></h1>
-    <p class="hero-sub">I help brands, creators, and businesses stand out through AI-enhanced visuals, persona creation, and content that converts — crafted with the tools that matter.</p>
-    <div class="cta-row">
-      <a href="#services" class="btn-primary">See my services ↓</a>
-      <a href="#contact" class="btn-ghost">Work with me</a>
-    </div>
-    <div class="scroll-hint"><span class="scroll-line"></span>Scroll to explore</div>
-  </div>
-
-  <hr class="divider">
-
-  <section id="services">
-    <p class="section-label">What I do</p>
-    <div class="services-grid">
-      <div class="service-card reveal"><p class="service-num">01</p><div class="service-icon">🖼️</div><p class="service-title">AI Image Enhancement & Upscaling</p><p class="service-desc">Low-res to high-quality. Product photos, portraits, and brand assets made sharper, cleaner, and more professional using AI upscaling tools.</p></div>
-      <div class="service-card reveal"><p class="service-num">02</p><div class="service-icon">🤖</div><p class="service-title">AI Influencer & Persona Creation</p><p class="service-desc">Custom AI personas built for social media — consistent face, unique backstory, and platform-ready content pipelines from scratch.</p></div>
-      <div class="service-card reveal"><p class="service-num">03</p><div class="service-icon">✨</div><p class="service-title">AI Content Creation</p><p class="service-desc">Captions, scripts, threads, and copy — written with AI and refined for real engagement. Built for brands that want to sound human, not robotic.</p></div>
-      <div class="service-card reveal"><p class="service-num">04</p><div class="service-icon">🎬</div><p class="service-title">Video Editing</p><p class="service-desc">Reels, short-form clips, and branded videos edited in CapCut with cinematic cuts, zoom punches, speed ramps, and polished transitions.</p></div>
-      <div class="service-card reveal"><p class="service-num">05</p><div class="service-icon">📱</div><p class="service-title">Social Media Management</p><p class="service-desc">Strategy, scheduling, and content systems that grow your presence consistently — without burning you or your budget out.</p></div>
-      <div class="service-card reveal"><p class="service-num">06</p><div class="service-icon">🎨</div><p class="service-title">Graphic Design</p><p class="service-desc">Canva-based visuals — social posts, brand kits, pitch decks, and marketing materials. Fast turnaround, polished output.</p></div>
-    </div>
-    <div class="tools-row reveal">
-      <span class="tool-chip">Claude AI</span>
-      <span class="tool-chip">ChatGPT</span>
-      <span class="tool-chip">Gemini</span>
-      <span class="tool-chip">MS Copilot</span>
-      <span class="tool-chip">Magnific AI</span>
-      <span class="tool-chip">CapCut Pro</span>
-      <span class="tool-chip">Canva Pro</span>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section id="work">
-    <p class="section-label">Work samples</p>
-    <h2 style="font-size:28px;font-weight:600;margin-bottom:0.75rem;letter-spacing:-0.01em;">AI-powered content <em style="font-style:normal;color:var(--accent-light);">in action.</em></h2>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:2.5rem;max-width:500px;">Real projects made using AI tools — from video editing to branded content creation.</p>
-    <div class="portfolio-grid">
-      <div class="portfolio-card reveal">
-        <div class="portfolio-video-wrap">
-          <video src="assets/Ghost%20Figther%20Leche%20Flan%20Edition.mp4" muted loop playsinline preload="metadata" id="vid1"></video>
-          <div class="portfolio-play" onclick="toggleVideo('vid1', this)"><span class="play-icon">▶</span></div>
-          <div class="portfolio-badge">Video Editing · AI Content</div>
+    <!-- Section 1: Hero -->
+    <section id="hero">
+        <div class="hero-content gsap-fade">
+            <h1>MADE BY LA</h1>
+            <p>Creative Developer & Designer</p>
         </div>
-        <div class="portfolio-info">
-          <p class="portfolio-title">Ghost Fighter — Leche Flan Edition</p>
-          <p class="portfolio-desc">AI-powered parody video edit for Taguro Leche Flan. Anime-style branding meets Filipino food content.</p>
-          <div class="portfolio-tags"><span>CapCut Pro</span><span>AI Content</span><span>Branding</span></div>
+    </section>
+
+    <!-- Section 2: About / Skills -->
+    <section id="about">
+        <div class="about-content gsap-fade">
+            <h2>Crafting Digital Dimensions</h2>
+            <p>I merge mathematical logic with pixel-perfect design to create immersive, high-performance web experiences that live in the intersection of art and code.</p>
         </div>
-      </div>
-    </div>
-    <p style="font-size:12px;color:var(--text-dim);margin-top:2rem;font-family:'Space Mono',monospace;">More projects coming soon.</p>
-  </section>
+    </section>
 
-  <hr class="divider">
-
-  <section id="about">
-    <p class="section-label">About</p>
-    <div class="about-grid reveal">
-      <div>
-        <h2 class="about-title">A creative who actually knows how to use AI.</h2>
-        <p class="about-text">I'm LA — a Filipino freelancer specializing in AI-powered creative services. From building full AI influencer personas to editing cinematic short-form videos, I bring both the technical skill and the creative eye to every project.</p>
-        <p class="about-text">I work with the tools that are actually moving the industry right now — not just talking about AI, but building with it every day. Based in the Philippines, open to global clients.</p>
-        <div class="stats-row">
-          <div><div class="stat-num">6+</div><div class="stat-label">Services offered</div></div>
-          <div><div class="stat-num">7+</div><div class="stat-label">AI tools mastered</div></div>
-          <div><div class="stat-num">PH</div><div class="stat-label">Based, global ready</div></div>
+    <!-- Section 3: Contact -->
+    <section id="contact">
+        <div class="contact-content gsap-fade">
+            <h2>Let's Connect!</h2>
+            <div class="social-links">
+                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+            </div>
         </div>
-      </div>
-      <div class="profile-card">
-        <div class="avatar">LA<div class="avatar-status"></div></div>
-        <p class="profile-name">L.A. Evangelista</p>
-        <p class="profile-role">AI Creative Freelancer · Philippines</p>
-        <div class="available-badge"><span class="available-dot"></span>Available for projects</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="divider">
+    <!-- CDN Libraries (Three.js and GSAP + ScrollTrigger) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <!-- WHY CHOOSE ME -->
-  <section id="why">
-    <p class="section-label">Why choose me</p>
-    <h2 style="font-size:28px;font-weight:600;margin-bottom:0.75rem;letter-spacing:-0.01em;">Not just another <em style="font-style:normal;color:var(--accent-light);">freelancer.</em></h2>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:3rem;max-width:500px;">Here's what makes working with MadeByLA different from the rest.</p>
-    <div class="why-grid">
-      <div class="why-card reveal">
-        <div class="why-icon">🤖</div>
-        <h3 class="why-title">AI-First Approach</h3>
-        <p class="why-desc">I don't just use AI as a gimmick — it's built into every step of my workflow. That means faster delivery, higher quality, and better results at a fraction of the cost.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">⚡</div>
-        <h3 class="why-title">Fast Turnaround</h3>
-        <p class="why-desc">AI-powered workflow means I can deliver what traditional freelancers take days to do — in hours. No long waiting times, no back-and-forth delays.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">💰</div>
-        <h3 class="why-title">Premium Quality, Honest Rates</h3>
-        <p class="why-desc">Based in the Philippines, I offer world-class creative output at rates that make sense for your budget — without sacrificing quality.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">🎯</div>
-        <h3 class="why-title">Results-Focused</h3>
-        <p class="why-desc">Every piece of content I create has a purpose — to attract, engage, or convert. I don't just make things look good. I make things that work.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">🔄</div>
-        <h3 class="why-title">Revisions Welcome</h3>
-        <p class="why-desc">Your satisfaction is the priority. If something doesn't feel right, I'll work with you until it does — no questions asked.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">🌐</div>
-        <h3 class="why-title">Global Ready</h3>
-        <p class="why-desc">Fluent in English, experienced working with international clients, and comfortable with remote collaboration tools. Wherever you are, I've got you covered.</p>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
 
-  <style>
-    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
-    .why-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 14px; padding: 2rem; transition: border-color 0.3s, transform 0.3s; }
-    .why-card:hover { border-color: var(--border-accent); transform: translateY(-4px); }
-    .why-icon { font-size: 28px; margin-bottom: 1rem; }
-    .why-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 0.6rem; }
-    .why-desc { font-size: 13px; line-height: 1.7; color: var(--text-muted); }
-  </style>
+        // --- Three.js Setup ---
+        const canvas = document.querySelector('#webgl-bg');
+        const scene = new THREE.Scene();
+        
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 4;
 
-  <hr class="divider">
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  <section id="process">
-    <p class="section-label">How it works</p>
-    <h2 style="font-size:28px;font-weight:600;margin-bottom:0.75rem;letter-spacing:-0.01em;">Simple process. <em style="font-style:normal;color:var(--accent-light);">Real results.</em></h2>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:3rem;max-width:500px;">Working with me is straightforward. Here's what to expect from start to finish.</p>
-    <div class="process-grid">
-      <div class="process-card reveal">
-        <div class="process-num">01</div>
-        <div class="process-icon">💬</div>
-        <h3 class="process-title">Discuss</h3>
-        <p class="process-desc">Tell me about your project — what you need, your brand, your goals, and your timeline. No complicated forms. Just a simple conversation.</p>
-      </div>
-      <div class="process-connector">→</div>
-      <div class="process-card reveal">
-        <div class="process-num">02</div>
-        <div class="process-icon">⚡</div>
-        <h3 class="process-title">Create</h3>
-        <p class="process-desc">I get to work using the best AI tools available — producing premium content, visuals, or videos tailored specifically to your brand and audience.</p>
-      </div>
-      <div class="process-connector">→</div>
-      <div class="process-card reveal">
-        <div class="process-num">03</div>
-        <div class="process-icon">🎯</div>
-        <h3 class="process-title">Deliver</h3>
-        <p class="process-desc">You receive your completed work, ready to publish or use. Revisions are always welcome — your satisfaction is the priority.</p>
-      </div>
-    </div>
-  </section>
+        // --- Particle Setup ---
+        const particleCount = 15000;
+        
+        // Define Arrays for Shapes
+        const spherePositions = new Float32Array(particleCount * 3);
+        const torusPositions = new Float32Array(particleCount * 3);
+        const wavePositions = new Float32Array(particleCount * 3);
 
-  <hr class="divider">
+        for (let i = 0; i < particleCount; i++) {
+            // 1. Sphere Math (State 1)
+            const u = Math.random();
+            const v = Math.random();
+            const theta = u * 2.0 * Math.PI;
+            const phi = Math.acos(2.0 * v - 1.0);
+            const r = 1.4 + Math.random() * 0.15;
+            spherePositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            spherePositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+            spherePositions[i * 3 + 2] = r * Math.cos(phi);
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <p class="section-label">Testimonials</p>
-    <h2 style="font-size:28px;font-weight:600;margin-bottom:0.75rem;letter-spacing:-0.01em;">What clients <em style="font-style:normal;color:var(--accent-light);">are saying.</em></h2>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:3rem;max-width:500px;">Currently accepting first clients — testimonials coming soon. Be one of the first to work with MadeByLA.</p>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Testimonial coming soon. Be one of the first clients to work with MadeByLA and share your experience."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">?</div>
-          <div>
-            <p class="testi-name">Your name here</p>
-            <p class="testi-role">First client · MadeByLA</p>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Spots are open! Reach out today and let's create something premium together."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">?</div>
-          <div>
-            <p class="testi-name">Your name here</p>
-            <p class="testi-role">First client · MadeByLA</p>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Working with an AI-powered freelancer was a game changer for our brand content."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">?</div>
-          <div>
-            <p class="testi-name">Your name here</p>
-            <p class="testi-role">First client · MadeByLA</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+            // 2. Torus Math (State 2)
+            const rTorus = 0.35; 
+            const RTorus = 1.1; 
+            const uT = Math.random() * 2 * Math.PI;
+            const vT = Math.random() * 2 * Math.PI;
+            torusPositions[i * 3] = (RTorus + rTorus * Math.cos(vT)) * Math.cos(uT);
+            torusPositions[i * 3 + 1] = (RTorus + rTorus * Math.cos(vT)) * Math.sin(uT);
+            torusPositions[i * 3 + 2] = rTorus * Math.sin(vT);
 
-  <style>
-    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
-    .testi-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: 14px; padding: 2rem; transition: border-color 0.3s; }
-    .testi-card:hover { border-color: var(--border-accent); }
-    .testi-stars { color: #fbbf24; font-size: 14px; margin-bottom: 1rem; letter-spacing: 2px; }
-    .testi-text { font-size: 13px; line-height: 1.75; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; }
-    .testi-author { display: flex; align-items: center; gap: 12px; }
-    .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-glow); border: 0.5px solid var(--border-accent); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--accent-light); font-family: 'Space Mono', monospace; flex-shrink: 0; }
-    .testi-name { font-size: 13px; font-weight: 600; color: var(--text); }
-    .testi-role { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-  </style>
-
-  <hr class="divider">
-
-  <!-- FAQ -->
-  <section id="faq">
-    <p class="section-label">FAQ</p>
-    <h2 style="font-size:28px;font-weight:600;margin-bottom:0.75rem;letter-spacing:-0.01em;">Common <em style="font-style:normal;color:var(--accent-light);">questions.</em></h2>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:3rem;max-width:500px;">Everything you need to know before working with MadeByLA.</p>
-    <div class="faq-list">
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>How long does a typical project take?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">It depends on the scope. Simple tasks like image enhancement or caption writing can be done within 24 hours. Larger projects like AI persona creation or social media packages typically take 3-5 business days. I always give a clear timeline before starting.</div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>How do we communicate during the project?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">We can communicate through email, LinkedIn, or whatever platform works best for you. I'm responsive and will keep you updated throughout the entire process.</div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>Do you offer revisions?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">Yes — revisions are always welcome. Your satisfaction is the priority. If something doesn't feel right, I'll work with you until it does.</div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>What payment methods do you accept?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">For international clients — PayPal, Wise, and Fiverr platform payment. For local Philippine clients — GCash and bank transfer. Payment terms will be discussed before starting any project.</div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>Can you handle multiple projects at once?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">Yes, but I'm transparent about my availability. If I have a heavy workload, I'll let you know upfront so we can set realistic expectations and timelines.</div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>Do you work with clients outside the Philippines?</span>
-          <span class="faq-arrow">↓</span>
-        </div>
-        <div class="faq-a">Absolutely. I work with clients globally — US, UK, Australia, and beyond. Fluent in English and experienced with remote collaboration. Time zone differences are never a problem.</div>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    .faq-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; }
-    .faq-item { background: var(--bg-card); }
-    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.75rem; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text); transition: background 0.2s; user-select: none; }
-    .faq-q:hover { background: var(--bg-hover); }
-    .faq-q.open { color: var(--accent-light); }
-    .faq-arrow { font-size: 16px; color: var(--text-dim); transition: transform 0.3s; }
-    .faq-q.open .faq-arrow { transform: rotate(180deg); color: var(--accent); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; font-size: 13px; line-height: 1.75; color: var(--text-muted); padding: 0 1.75rem; }
-    .faq-a.open { max-height: 200px; padding: 0 1.75rem 1.25rem; }
-  </style>
-
-  <script>
-    function toggleFaq(el) {
-      const answer = el.nextElementSibling;
-      const isOpen = el.classList.contains('open');
-      document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
-      if (!isOpen) { el.classList.add('open'); answer.classList.add('open'); }
-    }
-  </script>
-
-  <hr class="divider">
-
-  <section id="contact">
-    <p class="section-label">Get in touch</p>
-    <div class="contact-grid">
-      <div>
-        <h2 style="font-size:32px;font-weight:600;line-height:1.2;margin-bottom:1rem;letter-spacing:-0.01em;">Let's work <em style="font-style:normal;color:var(--accent-light);">together.</em></h2>
-        <p style="font-size:14px;line-height:1.8;color:var(--text-muted);margin-bottom:2rem;">Have a project in mind? Fill out the form and I'll get back to you within 24 hours. Let's create something premium.</p>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          <a href="mailto:laventuresofficialph@gmail.com" class="contact-chip">📧 laventuresofficialph@gmail.com</a>
-          <a href="https://linkedin.com/in/madebyla" target="_blank" class="contact-chip">💼 linkedin.com/in/madebyla</a>
-        </div>
-      </div>
-      <div class="contact-box reveal">
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
-          <input type="hidden" name="form-name" value="contact" />
-          <p style="display:none;"><input name="bot-field" /></p>
-          <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input type="text" name="name" class="form-input" placeholder="John Smith" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-input" placeholder="john@example.com" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Service Needed</label>
-            <select name="service" class="form-input">
-              <option value="">Select a service...</option>
-              <option>AI Image Enhancement & Upscaling</option>
-              <option>AI Influencer & Persona Creation</option>
-              <option>AI Content Creation</option>
-              <option>Video Editing</option>
-              <option>Social Media Management</option>
-              <option>Graphic Design</option>
-              <option>Multiple Services</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Tell me about your project</label>
-            <textarea name="message" class="form-input form-textarea" placeholder="Describe what you need..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width:100%;" id="submit-btn">Send Message →</button>
-          <p id="form-success" style="display:none;color:#4ade80;font-size:13px;margin-top:1rem;text-align:center;font-family:'Space Mono',monospace;">Message sent! I'll get back to you within 24 hours.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <footer>MadeByLA © 2026 &nbsp;·&nbsp; Built with AI, refined by hand. &nbsp;·&nbsp; Philippines</footer>
-
-  <script>
-    /* PARTICLES */
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
-    const particles = Array.from({length: 80}, () => ({
-      x: Math.random()*W, y: Math.random()*H,
-      r: Math.random()*2.5+0.8,
-      dx: (Math.random()-0.5)*0.4, dy: (Math.random()-0.5)*0.4,
-      alpha: Math.random()*0.6+0.1
-    }));
-    function drawParticles() {
-      ctx.clearRect(0,0,W,H);
-      particles.forEach(p => {
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle=`rgba(59,130,246,${p.alpha})`; ctx.fill();
-        p.x+=p.dx; p.y+=p.dy;
-        if(p.x<0||p.x>W) p.dx*=-1;
-        if(p.y<0||p.y>H) p.dy*=-1;
-      });
-      for(let i=0;i<particles.length;i++) {
-        for(let j=i+1;j<particles.length;j++) {
-          const dist=Math.hypot(particles[i].x-particles[j].x, particles[i].y-particles[j].y);
-          if(dist<100) {
-            ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y);
-            ctx.lineTo(particles[j].x,particles[j].y);
-            ctx.strokeStyle=`rgba(59,130,246,${0.08*(1-dist/100)})`; ctx.lineWidth=0.5; ctx.stroke();
-          }
+            // 3. Wave/Plane Math (State 3)
+            wavePositions[i * 3] = (Math.random() - 0.5) * 5.0; 
+            wavePositions[i * 3 + 1] = (Math.random() - 0.5) * 5.0; 
+            wavePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.2; 
         }
-      }
-      const time=Date.now()*0.0008;
-      const mp = window.__mouseParallax || {x:0,y:0};
-      const orbX=W*0.75+Math.cos(time)*120+mp.x, orbY=H*0.35+Math.sin(time*0.7)*80+mp.y;
-      const g=ctx.createRadialGradient(orbX,orbY,0,orbX,orbY,220);
-      g.addColorStop(0,"rgba(59,130,246,0.22)"); g.addColorStop(0.4,"rgba(59,130,246,0.09)"); g.addColorStop(1,"rgba(59,130,246,0)");
-      ctx.beginPath(); ctx.arc(orbX,orbY,220,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
-      const orbX2=W*0.15+Math.cos(time*0.6+2)*90-mp.x*0.6, orbY2=H*0.65+Math.sin(time*0.5)*70-mp.y*0.6;
-      const g2=ctx.createRadialGradient(orbX2,orbY2,0,orbX2,orbY2,170);
-      g2.addColorStop(0,"rgba(147,197,253,0.16)"); g2.addColorStop(0.5,"rgba(59,130,246,0.06)"); g2.addColorStop(1,"rgba(59,130,246,0)");
-      ctx.beginPath(); ctx.arc(orbX2,orbY2,170,0,Math.PI*2); ctx.fillStyle=g2; ctx.fill();
-      requestAnimationFrame(drawParticles);
-    }
-    drawParticles();
-    window.addEventListener('resize',()=>{ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; });
 
-    /* SCROLL REVEAL */
-    document.querySelectorAll('.reveal').forEach(el => {
-      new IntersectionObserver(entries => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-      },{threshold:0.1}).observe(el);
-    });
+        // Create Custom Buffer Geometry
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(spherePositions, 3));
+        geometry.setAttribute('aTorus', new THREE.BufferAttribute(torusPositions, 3));
+        geometry.setAttribute('aWave', new THREE.BufferAttribute(wavePositions, 3));
 
-    /* TYPEWRITER */
-    const em=document.querySelector('h1 em');
-    if(em){ const text=em.textContent; em.textContent=''; em.classList.add('typewriter');
-      let i=0; const type=()=>{ if(i<text.length){em.textContent+=text[i++];setTimeout(type,80);}else em.classList.remove('typewriter'); };
-      setTimeout(type,800); }
+        // --- Custom GLSL Shaders for Morphing ---
+        const vertexShader = `
+            uniform float uProgress;
+            uniform float uTime;
+            attribute vec3 aTorus;
+            attribute vec3 aWave;
+            varying vec3 vPosition;
 
-    /* NAV + PROGRESS */
-    const nav=document.getElementById('mainNav');
-    const bar=document.getElementById('progress-bar');
-    window.addEventListener('scroll',()=>{
-      nav.classList.toggle('scrolled',window.scrollY>50);
-      bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
-    });
+            void main() {
+                vec3 mixedPos = position;
 
-    /* VIDEO */
-    function toggleVideo(id,btn){ const v=document.getElementById(id); if(v.paused){v.play();btn.classList.add('playing');}else{v.pause();btn.classList.remove('playing');} }
-    document.querySelectorAll('.portfolio-video-wrap video').forEach(vid=>{
-      new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          const btn=vid.nextElementSibling;
-          if(e.isIntersecting){vid.play().then(()=>btn.classList.add('playing')).catch(()=>{});}
-          else{vid.pause();btn.classList.remove('playing');}
+                // Phase 1: Sphere to Torus (uProgress from 0.0 to 1.0)
+                float t1 = clamp(uProgress, 0.0, 1.0);
+                mixedPos = mix(mixedPos, aTorus, t1);
+
+                // Phase 2: Torus to Wave (uProgress from 1.0 to 2.0)
+                float t2 = clamp(uProgress - 1.0, 0.0, 1.0);
+                
+                // Add fluid dynamic sine wave motion to the wave coordinates
+                vec3 customWave = aWave;
+                if(t2 > 0.0) {
+                    customWave.z += sin(customWave.x * 2.5 + uTime) * 0.25;
+                    customWave.z += cos(customWave.y * 2.0 + uTime) * 0.25;
+                }
+                mixedPos = mix(mixedPos, customWave, t2);
+
+                // Gentle idle breathing noise for floating animation effect
+                mixedPos.x += sin(uTime * 0.3 + position.y) * 0.03;
+                mixedPos.y += cos(uTime * 0.4 + position.x) * 0.03;
+
+                vec4 mvPosition = modelViewMatrix * vec4(mixedPos, 1.0);
+                gl_Position = projectionMatrix * mvPosition;
+
+                // Dynamic sizing based on viewport distance
+                gl_PointSize = 7.0 * (2.5 / -mvPosition.z);
+            }
+        `;
+
+        const fragmentShader = `
+            void main() {
+                // Perfect smooth glowing circles instead of generic squares
+                float dist = distance(gl_PointCoord, vec2(0.5));
+                if (dist > 0.5) discard;
+                
+                float alpha = smoothstep(0.5, 0.1, dist);
+                
+                // Neon Cyan Color Mix Map (#00ffe0)
+                gl_FragColor = vec4(0.0, 1.0, 0.88, alpha * 0.85);
+            }
+        `;
+
+        // Shader Material Integration
+        const uniforms = {
+            uProgress: { value: 0.0 },
+            uTime: { value: 0.0 }
+        };
+
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: uniforms,
+            transparent: true,
+            depthTest: false,
+            blending: THREE.AdditiveBlending
         });
-      },{threshold:0.5}).observe(vid);
-    });
 
-    /* COUNTER */
-    document.querySelectorAll('.stat-num').forEach(el=>{
-      new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){ const num=parseInt(el.textContent); const suffix=el.textContent.replace(num.toString(),'');
-            if(!isNaN(num)){ let s=0; const step=num/75; const t=setInterval(()=>{ s=Math.min(s+step,num); el.textContent=Math.floor(s)+suffix; if(s>=num)clearInterval(t); },16); }
-          }
+        const particleSystem = new THREE.Points(geometry, material);
+        scene.add(particleSystem);
+
+        // --- Mouse Interaction System ---
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+        let currentMouseX = 0;
+        let currentMouseY = 0;
+
+        window.addEventListener('mousemove', (event) => {
+            targetMouseX = (event.clientX / window.innerWidth) - 0.5;
+            targetMouseY = (event.clientY / window.innerHeight) - 0.5;
         });
-      },{threshold:0.5}).observe(el);
-    });
 
-    /* CONTACT FORM */
-    function handleSubmit(e){ e.preventDefault();
-      const btn=document.getElementById('submit-btn'); const success=document.getElementById('form-success');
-      btn.textContent='Sending...'; btn.disabled=true;
-      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
-      .then(()=>{ btn.style.display='none'; success.style.display='block'; e.target.reset(); })
-      .catch(()=>{ btn.textContent='Send Message →'; btn.disabled=false; });
-    }
-
-    /* ====== LOADER ====== */
-    (function(){
-      const fill = document.getElementById('loaderFill');
-      const pct = document.getElementById('loaderPct');
-      const loaderEl = document.getElementById('loader');
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) { loaderEl.classList.add('hidden'); return; }
-      let p = 0;
-      const tick = () => {
-        p += Math.random()*18+6;
-        if (p >= 100) p = 100;
-        fill.style.width = p + '%';
-        pct.textContent = String(Math.floor(p)).padStart(2,'0') + '%';
-        if (p < 100) { setTimeout(tick, 120); }
-        else { setTimeout(()=>loaderEl.classList.add('hidden'), 300); }
-      };
-      setTimeout(tick, 200);
-    })();
-
-    /* ====== CUSTOM CURSOR ====== */
-    (function(){
-      if (!window.matchMedia('(pointer: fine)').matches) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      document.body.classList.add('has-custom-cursor');
-      const dot = document.getElementById('cursor-dot');
-      const ring = document.getElementById('cursor-ring');
-      let mx=0, my=0, rx=0, ry=0;
-      window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
-      (function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-      document.querySelectorAll('a, button, .service-card, .portfolio-card, .why-card, .process-card, .testi-card, .tool-chip, .faq-q').forEach(el=>{
-        el.addEventListener('mouseenter', ()=>ring.classList.add('active'));
-        el.addEventListener('mouseleave', ()=>ring.classList.remove('active'));
-      });
-    })();
-
-    /* ====== SMOOTH SCROLL (Lenis) ====== */
-    (function(){
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (typeof Lenis === 'undefined') return;
-      const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-      if (typeof ScrollTrigger !== 'undefined') { lenis.on('scroll', ScrollTrigger.update); }
-      document.querySelectorAll('a[href^="#"]').forEach(a=>{
-        a.addEventListener('click', e=>{
-          const id = a.getAttribute('href');
-          if (id.length > 1) {
-            const target = document.querySelector(id);
-            if (target) { e.preventDefault(); lenis.scrollTo(target, {offset:-70}); }
-          }
+        // --- GSAP Scroll Animations Orchestration ---
+        
+        // 1. Particle State Morphing Control via Progress
+        gsap.to(uniforms.uProgress, {
+            value: 2.0,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.2
+            }
         });
-      });
-    })();
 
-    /* ====== CARD TILT (mouse-reactive 3D) ====== */
-    (function(){
-      if (!window.matchMedia('(pointer: fine)').matches) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      document.querySelectorAll('.service-card, .portfolio-card, .why-card, .process-card').forEach(card=>{
-        card.classList.add('tilt-card');
-        card.addEventListener('mousemove', e=>{
-          const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left)/r.width - 0.5;
-          const py = (e.clientY - r.top)/r.height - 0.5;
-          card.style.transform = `perspective(600px) rotateX(${(-py*6).toFixed(2)}deg) rotateY(${(px*6).toFixed(2)}deg) translateY(-4px)`;
+        // 2. Continuous Particle System Rotation Sync
+        gsap.to(particleSystem.rotation, {
+            y: Math.PI * 2,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
         });
-        card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
-      });
-    })();
 
-    /* ====== HERO SCROLL PARALLAX (GSAP ScrollTrigger) ====== */
-    (function(){
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-      gsap.registerPlugin(ScrollTrigger);
-      const hero = document.querySelector('.hero');
-      if (hero) {
-        gsap.to(hero, { opacity: 0.15, y: -40, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-      }
-    })();
+        // 3. Dom Typography Text Fade Effects
+        const sections = document.querySelectorAll('section');
+        sections.forEach((section) => {
+            const content = section.querySelector('.gsap-fade');
+            
+            gsap.fromTo(content, 
+                { opacity: 0, y: 40 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 60%",
+                        end: "top 20%",
+                        toggleActions: "play reverse play reverse"
+                    }
+                }
+            );
+        });
 
-    /* ====== MOUSE PARALLAX ON BACKGROUND ORBS ====== */
-    window.__mouseParallax = { x: 0, y: 0 };
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.addEventListener('mousemove', e => {
-        window.__mouseParallax.x = (e.clientX / window.innerWidth - 0.5) * 60;
-        window.__mouseParallax.y = (e.clientY / window.innerHeight - 0.5) * 60;
-      });
-    }
-  </script>
+        // --- Window Resize Adaptation ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+
+        // --- Animation Render Loop ---
+        const clock = new THREE.Clock();
+
+        const tick = () => {
+            const elapsedTime = clock.getElapsedTime();
+            uniforms.uTime.value = elapsedTime;
+
+            // Smooth Mouse Follower Interpolation (Lerp)
+            currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+            currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+            // Inject mouse sway vectors based on global morph coordinates
+            particleSystem.rotation.x = currentMouseY * 0.4;
+            // Base timeline offset rotation
+            if (uniforms.uProgress.value > 1.0) {
+                // Look down slightly during wave phase
+                particleSystem.rotation.x += 0.6; 
+            }
+
+            renderer.render(scene, camera);
+            window.requestAnimationFrame(tick);
+        };
+
+        tick();
+    </script>
 </body>
 </html>
