@@ -1,0 +1,60 @@
+========================================================
+  PAANO MAGDAGDAG NG WORK SA GALLERY
+  (Made by LA — portfolio website)
+========================================================
+
+Ang gallery ay nasa "Selected Work" section ng website.
+Bawat CARD = isang SET (halimbawa: isang location o theme).
+Pag na-click ang card, lalabas lahat ng photo/video ng set na 'yon
+sa full resolution (lightbox viewer).
+
+--------------------------------------------------------
+STEP 1 — ILAGAY ANG FILES MO
+--------------------------------------------------------
+May 3 folder na nakahanda dito sa loob ng "assets":
+   assets/set01/
+   assets/set02/
+   assets/set03/
+
+Sa bawat folder, ilagay mo ang:
+  - thumb.jpg   -> ito ang lalabas sa CARD (thumbnail).
+                   Pwede screenshot ng workflow MO, o ang pinaka-
+                   maganda mong final image para sa set na 'yon.
+  - 01.jpg, 02.jpg, ...  -> ang high-res na FINAL photos (na-DL mo)
+  - clip.mp4    -> kung may video ang set na 'yon
+
+Pwedeng .jpg .png .webp para sa photo, at .mp4 .webm para sa video.
+
+--------------------------------------------------------
+STEP 2 — PANGALANAN ANG SETS (optional pero recommended)
+--------------------------------------------------------
+Buksan ang index.html sa text editor. Hanapin ang salitang:
+      var WORKS = [
+Doon mo makikita ang listahan ng sets. Palitan mo lang ang:
+   title  -> pangalan ng set (hal. "Set 01 — Tokyo Nights")
+   meta   -> maliit na label (hal. "Street • Neon • 8 shots")
+   thumb  -> path ng thumbnail (hal. 'assets/set01/thumb.jpg')
+   media  -> listahan ng photos/videos na lalabas pag na-click.
+             Format:
+                { type: 'image', src: 'assets/set01/01.jpg' },
+                { type: 'video', src: 'assets/set01/clip.mp4' },
+
+--------------------------------------------------------
+GUSTO MO MAGDAGDAG NG BAGONG SET (set04, set05...)?
+--------------------------------------------------------
+1) Gumawa ng bagong folder: assets/set04
+2) Ilagay ang files doon.
+3) Sa WORKS array sa index.html, kopyahin ang isang buong bloke
+   (mula { hanggang }) at palitan ang laman + paths.
+
+--------------------------------------------------------
+TIP
+--------------------------------------------------------
+- 8 to 15 lang na PINAKA-SOLID na images sa buong gallery.
+  Kalidad over dami.
+- Kung wala pang file, OK lang — may lalabas na malinis na
+  "Add image" placeholder, hindi masisira ang site.
+- Consistent dapat ang mukha ng model sa lahat para makita ng
+  client na controlled talaga ang character mo.
+
+I-double click ang index.html para makita ang site sa browser.

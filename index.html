@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Made by LA — Creative Developer & Designer</title>
+  <meta name="description" content="Made by LA — Creative Developer & Designer. An interactive 3D portfolio experience." />
+
+  <style>
+    :root {
+      --bg: #050507;
+      --accent: #00f0ff;      /* neon cyan */
+      --text: #eafcff;
+      --muted: #8fb9c4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { width: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fixed WebGL canvas sits behind everything */
+    #webgl {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      display: block;
+    }
+
+    /* Scroll container holds the three full-height sections */
+    #scroll-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8vw;
+      pointer-events: none; /* let canvas breathe; re-enable on interactive children */
+    }
+
+    .section .content { max-width: 900px; }
+
+    /* --- Section 1: HERO --- */
+    #hero { align-items: flex-start; }
+
+    .hero-title {
+      font-size: clamp(3rem, 13vw, 11rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+      text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
+    }
+
+    .hero-tagline {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2.2vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+      animation: floatY 2.2s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 8px); }
+    }
+
+    /* --- Section 2: SKILLS / ABOUT --- */
+    #about { align-items: flex-end; text-align: right; }
+
+    .section-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text {
+      font-size: clamp(1.4rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .about-text strong { font-weight: 600; color: var(--accent); }
+
+    /* --- Section 3: CONTACT --- */
+    #contact { align-items: center; text-align: center; }
+
+    .contact-title {
+      font-size: clamp(2.5rem, 9vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.3);
+    }
+
+    .contact-sub {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--muted);
+    }
+
+    .links {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      pointer-events: auto; /* links are clickable */
+    }
+
+    .links a {
+      display: inline-block;
+      padding: 0.85rem 1.8rem;
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(0, 240, 255, 0.04);
+    }
+
+    .links a:hover {
+      background: var(--accent);
+      color: #04121a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 240, 255, 0.35);
+    }
+
+    .footer-note {
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    /* Loading overlay */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+    #loader.hidden { opacity: 0; pointer-events: none; }
+    #loader span {
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* --- Section: WORK / PORTFOLIO GALLERY --- */
+    #work {
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      height: auto;
+      padding-top: 14vh;
+      padding-bottom: 14vh;
+    }
+    #work .content { max-width: 1200px; width: 100%; }
+
+    .work-heading {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
+    }
+    .work-intro {
+      margin: 1rem auto 3rem;
+      max-width: 640px;
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.4rem;
+      pointer-events: auto; /* cards are interactive */
+    }
+
+    .work-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(0, 240, 255, 0.04);
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      aspect-ratio: 4 / 3;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .work-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 44px rgba(0, 240, 255, 0.28);
+    }
+    .work-card__thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: brightness(0.82) saturate(1.05);
+    }
+    .work-card:hover .work-card__thumb {
+      transform: scale(1.08);
+      filter: brightness(1) saturate(1.15);
+    }
+    /* Fallback shown when a thumbnail image is missing */
+    .work-card__placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(120% 120% at 20% 0%, rgba(0,240,255,0.18), transparent 55%),
+        linear-gradient(135deg, #0a1418, #05080b);
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    /* Gradient scrim + text over the thumbnail */
+    .work-card__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
+      padding: 1.1rem 1.2rem;
+      background: linear-gradient(to top, rgba(3,8,11,0.92) 0%, rgba(3,8,11,0.35) 45%, transparent 75%);
+      z-index: 2;
+    }
+    .work-card__title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .work-card__meta {
+      margin-top: 0.25rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    /* "View" pill that appears on hover */
+    .work-card__cta {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 3;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #04121a;
+      background: var(--accent);
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
+    }
+    .work-card:hover .work-card__cta { opacity: 1; transform: translateY(0); }
+    /* Small badge if the set contains video */
+    .work-card__badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 3;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(3, 8, 11, 0.7);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      backdrop-filter: blur(6px);
+    }
+
+    /* --- LIGHTBOX --- */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 5, 7, 0.92);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: auto;
+    }
+    #lightbox.open { display: flex; opacity: 1; }
+
+    .lb-stage {
+      position: relative;
+      max-width: min(1100px, 92vw);
+      max-height: 86vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lb-media-wrap {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lb-media {
+      max-width: 100%;
+      max-height: 74vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.6);
+      background: #05080b;
+    }
+    .lb-caption {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .lb-caption h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .lb-caption p {
+      margin-top: 0.3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .lb-counter {
+      margin-top: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .lb-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,240,255,0.35);
+      background: rgba(3,8,11,0.6);
+      color: var(--text);
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+    .lb-btn:hover { background: var(--accent); color: #04121a; }
+    .lb-prev { left: -8px; }
+    .lb-next { right: -8px; }
+    @media (min-width: 900px) {
+      .lb-prev { left: -70px; }
+      .lb-next { right: -70px; }
+    }
+
+    .lb-close {
+      position: absolute;
+      top: -46px;
+      right: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,240,255,0.35);
+      background: rgba(3,8,11,0.6);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .lb-close:hover { background: var(--accent); color: #04121a; }
+
+    /* Thumbnail strip inside lightbox for multi-media sets */
+    .lb-strip {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100%;
+    }
+    .lb-strip img {
+      width: 54px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      opacity: 0.5;
+      border: 1px solid transparent;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+    .lb-strip img.active { opacity: 1; border-color: var(--accent); }
+
+    @media (max-width: 640px) {
+      .section { padding: 10vw 7vw; }
+      #about { text-align: right; }
+      .links a { padding: 0.75rem 1.3rem; font-size: 0.85rem; }
+      .work-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+      .lb-prev { left: 2px; }
+      .lb-next { right: 2px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader"><span>Loading experience…</span></div>
+
+  <!-- WebGL canvas -->
+  <canvas id="webgl"></canvas>
+
+  <!-- Scroll content -->
+  <div id="scroll-container">
+
+    <!-- SECTION 1: HERO -->
+    <section class="section" id="hero">
+      <div class="content">
+        <h1 class="hero-title anim">Made<br />by LA</h1>
+        <p class="hero-tagline anim">Creative Developer &amp; Designer</p>
+      </div>
+      <div class="scroll-hint">Scroll to explore ↓</div>
+    </section>
+
+    <!-- SECTION 2: SKILLS / ABOUT -->
+    <section class="section" id="about">
+      <div class="content">
+        <div class="section-label anim">About / Skills</div>
+        <p class="about-text anim">
+          I craft <strong>immersive digital experiences</strong> where design meets code —
+          blending <strong>creative direction</strong>, <strong>interactive 3D</strong>, and
+          clean front-end engineering to build work that feels alive.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: WORK / PORTFOLIO GALLERY -->
+    <section class="section" id="work">
+      <div class="content">
+        <div class="section-label anim">Selected Work</div>
+        <h2 class="work-heading anim">AI Model &amp; Virtual Talent</h2>
+        <p class="work-intro anim">
+          A look behind the production. Each tile is a workflow set —
+          hover to preview, click to view the final high-resolution photos and videos.
+        </p>
+        <div class="work-grid" id="work-grid"><!-- cards injected by JS --></div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CONTACT / SOCIALS -->
+    <section class="section" id="contact">
+      <div class="content">
+        <h2 class="contact-title anim">Let's Connect!</h2>
+        <p class="contact-sub anim">Have a project in mind? Let's make something remarkable.</p>
+        <div class="links anim">
+          <a href="mailto:laventuresofficialph@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/madebyla/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <p class="footer-note">© 2026 Made by LA</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- LIGHTBOX (hidden until a work card is clicked) -->
+  <div id="lightbox" aria-hidden="true">
+    <div class="lb-stage">
+      <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+      <div class="lb-media-wrap">
+        <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">&#8249;</button>
+        <div id="lb-media-slot"></div>
+        <button class="lb-btn lb-next" id="lb-next" aria-label="Next">&#8250;</button>
+      </div>
+      <div class="lb-caption">
+        <h3 id="lb-title"></h3>
+        <p id="lb-desc"></p>
+        <div class="lb-counter" id="lb-counter"></div>
+      </div>
+      <div class="lb-strip" id="lb-strip"></div>
+    </div>
+  </div>
+
+  <!-- Libraries via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ---------- Config ----------
+    var ACCENT = 0x00f0ff;
+    var isMobile = window.innerWidth < 768;
+    // Fewer particles on mobile for performance
+    var COUNT = isMobile ? 4500 : 9000;
+
+    var canvas = document.getElementById('webgl');
+    var loader = document.getElementById('loader');
+
+    // ---------- Renderer ----------
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: !isMobile,
+      alpha: true
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // ---------- Scene & Camera ----------
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(
+      60, window.innerWidth / window.innerHeight, 0.1, 100
+    );
+    camera.position.set(0, 0, 9);
+
+    // ---------- Build target shapes ----------
+    // Each shape is a Float32Array of length COUNT*3.
+    function makeSphere(count, radius) {
+      var arr = new Float32Array(count * 3);
+      for (var i = 0; i < count; i++) {
+        // even distribution on sphere surface (+ slight thickness)
+        var u = Math.random();
+        var v = Math.random();
+        var theta = 2 * Math.PI * u;
+        var phi = Math.acos(2 * v - 1);
+        var r = radius * (0.85 + Math.random() * 0.15);
+        var x = r * Math.sin(phi) * Math.cos(theta);
+        var y = r * Math.sin(phi) * Math.sin(theta);
+        var z = r * Math.cos(phi);
+        arr[i * 3] = x;
+        arr[i * 3 + 1] = y;
+        arr[i * 3 + 2] = z;
+      }
+      return arr;
+    }
+
+    function makeTorus(count, R, tube) {
+      var arr = new Float32Array(count * 3);
+      for (var i = 0; i < count; i++) {
+        var u = Math.random() * Math.PI * 2; // around the ring
+        var vv = Math.random() * Math.PI * 2; // around the tube
+        var tr = tube * (0.7 + Math.random() * 0.3);
+        var x = (R + tr * Math.cos(vv)) * Math.cos(u);
+        var y = (R + tr * Math.cos(vv)) * Math.sin(u);
+        var z = tr * Math.sin(vv);
+        arr[i * 3] = x;
+        arr[i * 3 + 1] = y;
+        arr[i * 3 + 2] = z;
+      }
+      return arr;
+    }
+
+    function makeWave(count, size) {
+      var arr = new Float32Array(count * 3);
+      var side = Math.ceil(Math.sqrt(count));
+      var step = size / side;
+      for (var i = 0; i < count; i++) {
+        var ix = i % side;
+        var iz = Math.floor(i / side);
+        var x = (ix - side / 2) * step;
+        var z = (iz - side / 2) * step;
+        arr[i * 3] = x;
+        arr[i * 3 + 1] = 0; // wave displacement added at runtime
+        arr[i * 3 + 2] = z;
+      }
+      return arr;
+    }
+
+    var spherePos = makeSphere(COUNT, 3.0);
+    var torusPos = makeTorus(COUNT, 2.6, 1.0);
+    var wavePos = makeWave(COUNT, 11.0);
+
+    // ---------- Geometry ----------
+    var geometry = new THREE.BufferGeometry();
+    // Start on the sphere
+    var positions = new Float32Array(spherePos); // working buffer (copy)
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    // Circular sprite texture so points look like soft glowing dots
+    function makeSprite() {
+      var c = document.createElement('canvas');
+      c.width = c.height = 64;
+      var ctx = c.getContext('2d');
+      var g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(0.25, 'rgba(0,240,255,0.9)');
+      g.addColorStop(1, 'rgba(0,240,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 64, 64);
+      var tex = new THREE.CanvasTexture(c);
+      return tex;
+    }
+
+    var material = new THREE.PointsMaterial({
+      size: isMobile ? 0.07 : 0.055,
+      map: makeSprite(),
+      color: ACCENT,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
+    });
+
+    var points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // ---------- Morph state driven by scroll ----------
+    // morph.value: 0 = sphere, 1 = torus, 2 = wave
+    var morph = { value: 0 };
+
+    gsap.to(morph, {
+      value: 2,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#scroll-container',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1
+      }
+    });
+
+    // ---------- Text fade-ins ----------
+    // Hero visible on load
+    gsap.set('#hero .anim', { opacity: 0, y: 40 });
+    gsap.to('#hero .anim', {
+      opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.15, delay: 0.3
+    });
+
+    ['#about', '#contact'].forEach(function (sel) {
+      gsap.set(sel + ' .anim', { opacity: 0, y: 40 });
+      gsap.to(sel + ' .anim', {
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12,
+        scrollTrigger: {
+          trigger: sel,
+          start: 'top 65%',
+          toggleActions: 'play reverse play reverse'
+        }
+      });
+    });
+
+    // ---------- Animation loop ----------
+    var clock = new THREE.Clock();
+    var pos = geometry.attributes.position.array;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      var elapsed = clock.getElapsedTime();
+      var m = morph.value;
+
+      var t, fromA, toA;
+      var waveMix = 0;
+      if (m <= 1) {
+        t = m;               // sphere -> torus
+        fromA = spherePos;
+        toA = torusPos;
+      } else {
+        t = m - 1;           // torus -> wave
+        fromA = torusPos;
+        toA = wavePos;
+        waveMix = t;         // how "wave" we are (0..1)
+      }
+      // smootherstep easing for the morph
+      var e = t * t * (3 - 2 * t);
+
+      for (var i = 0; i < COUNT; i++) {
+        var i3 = i * 3;
+        var x = lerp(fromA[i3], toA[i3], e);
+        var y = lerp(fromA[i3 + 1], toA[i3 + 1], e);
+        var z = lerp(fromA[i3 + 2], toA[i3 + 2], e);
+
+        // Add flowing wave motion as we approach the wave shape
+        if (waveMix > 0) {
+          var wx = toA[i3];
+          var wz = toA[i3 + 2];
+          var d = Math.sqrt(wx * wx + wz * wz);
+          var displace = Math.sin(d * 0.9 - elapsed * 1.6) * 0.8
+                       + Math.sin(wx * 0.5 + elapsed * 1.2) * 0.4;
+          y += displace * waveMix;
+        }
+
+        pos[i3] = x;
+        pos[i3 + 1] = y;
+        pos[i3 + 2] = z;
+      }
+      geometry.attributes.position.needsUpdate = true;
+
+      // Gentle continuous rotation of the whole shape
+      points.rotation.y = elapsed * 0.12;
+      points.rotation.x = Math.sin(elapsed * 0.15) * 0.15;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ---------- Resize ----------
+    window.addEventListener('resize', function () {
+      var w = window.innerWidth, h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(w, h);
+      ScrollTrigger.refresh();
+    });
+
+    // ---------- Hide loader ----------
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        loader.classList.add('hidden');
+        ScrollTrigger.refresh();
+      }, 400);
+    });
+    // Fallback in case 'load' already fired
+    setTimeout(function () { loader.classList.add('hidden'); }, 2500);
+
+    /* =====================================================================
+       WORK GALLERY + LIGHTBOX
+       ---------------------------------------------------------------------
+       HOW TO ADD YOUR OWN WORK:
+       1. Put your files inside the "assets" folder (create subfolders per set).
+       2. Edit the WORKS array below. For each set:
+            - title  : the name shown on the card + lightbox
+            - meta   : small label (e.g. location / count)
+            - thumb  : the image shown on the card (a workflow screenshot,
+                       or your best final image for that set)
+            - media  : the high-res items shown when the card is clicked.
+                       Each item is { type:'image', src:'...' }  OR
+                                     { type:'video', src:'...' }
+       Paths are relative to index.html, e.g. 'assets/set01/01.jpg'.
+       Supported: .jpg .png .webp for images; .mp4 .webm for video.
+       Missing files show a neat placeholder, so you can wire them in later.
+    ===================================================================== */
+    var WORKS = [
+      {
+        title: 'Set 01 — Editorial',
+        meta: '2 photos • 1 video',
+        thumb: 'assets/set01/thumb.png',
+        media: [
+          { type: 'image', src: 'assets/set01/01.webp' },
+          { type: 'image', src: 'assets/set01/02.webp' },
+          { type: 'video', src: 'assets/set01/clip.mp4' }
+        ]
+      },
+      {
+        title: 'Set 02 — Lookbook',
+        meta: '9 photos • 4 videos',
+        thumb: 'assets/set02/thumb.png',
+        media: [
+          { type: 'image', src: 'assets/set02/01.png' },
+          { type: 'image', src: 'assets/set02/02.png' },
+          { type: 'image', src: 'assets/set02/03.png' },
+          { type: 'image', src: 'assets/set02/04.jpg' },
+          { type: 'image', src: 'assets/set02/05.png' },
+          { type: 'image', src: 'assets/set02/06.jpg' },
+          { type: 'image', src: 'assets/set02/07.png' },
+          { type: 'image', src: 'assets/set02/08.jpg' },
+          { type: 'image', src: 'assets/set02/09.jpg' },
+          { type: 'video', src: 'assets/set02/clip01.mp4' },
+          { type: 'video', src: 'assets/set02/clip02.mp4' },
+          { type: 'video', src: 'assets/set02/clip03.mp4' },
+          { type: 'video', src: 'assets/set02/clip04.mp4' }
+        ]
+      },
+      {
+        title: 'Set 03 — Motion',
+        meta: 'Video',
+        thumb: 'assets/set03/thumb.jpg',
+        media: [
+          { type: 'video', src: 'assets/set03/clip.mp4' }
+        ]
+      }
+    ];
+
+    var grid = document.getElementById('work-grid');
+
+    function hasVideo(work) {
+      for (var i = 0; i < work.media.length; i++) {
+        if (work.media[i].type === 'video') return true;
+      }
+      return false;
+    }
+
+    // ---- Build the cards ----
+    WORKS.forEach(function (work, index) {
+      var card = document.createElement('div');
+      card.className = 'work-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', 'Open ' + work.title);
+
+      var placeholder = '<div class="work-card__placeholder">Add image</div>';
+      var img = '<img class="work-card__thumb" src="' + work.thumb + '" alt="' +
+                work.title + '" loading="lazy" ' +
+                'onerror="this.style.display=\'none\'">';
+      var badge = hasVideo(work) ? '<div class="work-card__badge">▶ Video</div>' : '';
+      var overlay =
+        '<div class="work-card__overlay">' +
+          '<div class="work-card__title">' + work.title + '</div>' +
+          '<div class="work-card__meta">' + work.meta + '</div>' +
+        '</div>';
+      var cta = '<div class="work-card__cta">View →</div>';
+
+      card.innerHTML = placeholder + img + badge + cta + overlay;
+
+      card.addEventListener('click', function () { openLightbox(index, 0); });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(index, 0); }
+      });
+
+      grid.appendChild(card);
+    });
+
+    // ---- Reveal cards + headings on scroll ----
+    gsap.set('#work .anim', { opacity: 0, y: 40 });
+    gsap.to('#work .anim', {
+      opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.1,
+      scrollTrigger: { trigger: '#work', start: 'top 70%' }
+    });
+    gsap.set('.work-card', { opacity: 0, y: 50 });
+    ScrollTrigger.batch('.work-card', {
+      start: 'top 88%',
+      onEnter: function (batch) {
+        gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08 });
+      }
+    });
+
+    // ---- Lightbox ----
+    var lb = document.getElementById('lightbox');
+    var lbSlot = document.getElementById('lb-media-slot');
+    var lbTitle = document.getElementById('lb-title');
+    var lbDesc = document.getElementById('lb-desc');
+    var lbCounter = document.getElementById('lb-counter');
+    var lbStrip = document.getElementById('lb-strip');
+    var lbPrev = document.getElementById('lb-prev');
+    var lbNext = document.getElementById('lb-next');
+    var lbClose = document.getElementById('lb-close');
+
+    var curWork = 0;
+    var curMedia = 0;
+
+    function renderMedia() {
+      var work = WORKS[curWork];
+      var item = work.media[curMedia];
+      lbSlot.innerHTML = ''; // clears any playing video
+
+      var el;
+      if (item.type === 'video') {
+        el = document.createElement('video');
+        el.className = 'lb-media';
+        el.src = item.src;
+        el.controls = true;
+        el.autoplay = true;
+        el.playsInline = true;
+      } else {
+        el = document.createElement('img');
+        el.className = 'lb-media';
+        el.src = item.src;
+        el.alt = work.title;
+        el.onerror = function () {
+          lbSlot.innerHTML =
+            '<div style="padding:4rem 3rem;color:var(--muted);border:1px dashed ' +
+            'rgba(0,240,255,0.3);border-radius:12px;letter-spacing:0.1em;">' +
+            'IMAGE NOT ADDED YET<br><small style="opacity:0.7;font-size:0.7rem;">' +
+            item.src + '</small></div>';
+        };
+      }
+      lbSlot.appendChild(el);
+
+      lbTitle.textContent = work.title;
+      lbDesc.textContent = work.meta;
+      lbCounter.textContent = (curMedia + 1) + ' / ' + work.media.length;
+
+      // thumbnail strip
+      lbStrip.innerHTML = '';
+      if (work.media.length > 1) {
+        work.media.forEach(function (m, i) {
+          var t = document.createElement('img');
+          t.src = m.type === 'video' ? work.thumb : m.src;
+          t.className = i === curMedia ? 'active' : '';
+          t.onerror = function () { t.style.background = '#0a1418'; t.removeAttribute('src'); };
+          t.addEventListener('click', function () { curMedia = i; renderMedia(); });
+          lbStrip.appendChild(t);
+        });
+      }
+    }
+
+    function openLightbox(workIndex, mediaIndex) {
+      curWork = workIndex;
+      curMedia = mediaIndex || 0;
+      renderMedia();
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbSlot.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    function nextMedia() {
+      curMedia = (curMedia + 1) % WORKS[curWork].media.length;
+      renderMedia();
+    }
+    function prevMedia() {
+      var n = WORKS[curWork].media.length;
+      curMedia = (curMedia - 1 + n) % n;
+      renderMedia();
+    }
+
+    lbNext.addEventListener('click', nextMedia);
+    lbPrev.addEventListener('click', prevMedia);
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb) closeLightbox(); // click backdrop to close
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowRight') nextMedia();
+      else if (e.key === 'ArrowLeft') prevMedia();
+    });
+  })();
+  </script>
+</body>
+</html>
