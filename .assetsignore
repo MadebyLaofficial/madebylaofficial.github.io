@@ -1,0 +1,9 @@
+.git
+.git/**
+.gitattributes
+.gitignore
+.assetsignore
+.wrangler
+wrangler.jsonc
+README.md
+assets/PAANO-MAGDAGDAG-NG-WORK.txt
