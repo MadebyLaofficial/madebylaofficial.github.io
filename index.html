@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Made by LA — Creative Developer & Designer</title>
+  <title>Made by LA — AI Creative & Virtual Assistant</title>
   <meta name="description" content="Made by LA — Creative Developer & Designer. An interactive 3D portfolio experience." />
 
   <!-- Social / link preview (LinkedIn, Facebook, etc.) -->
@@ -467,6 +467,29 @@
     }
     .lb-strip img.active { opacity: 1; border-color: var(--accent); }
 
+    /* --- TOP NAV --- */
+    #topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 6vw; pointer-events: auto;
+    }
+    #topnav .brand { font-weight: 800; letter-spacing: 0.02em; font-size: 1.1rem; text-decoration: none; color: var(--text); }
+    #topnav .brand b { color: var(--accent); }
+    #topnav .nav-links { display: flex; gap: 1.8rem; }
+    #topnav .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.25s ease; }
+    #topnav .nav-links a:hover { color: var(--accent); }
+    @media (max-width: 700px) { #topnav .nav-links { display: none; } #topnav { padding: 0.9rem 7vw; } }
+
+    /* --- SERVICES --- */
+    #services { align-items: center; text-align: center; min-height: 100vh; height: auto; padding-top: 14vh; padding-bottom: 14vh; }
+    #services .content { max-width: 1100px; width: 100%; }
+    .svc-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; pointer-events: auto; text-align: left; }
+    .svc-card { border: 1px solid rgba(0,240,255,0.18); border-radius: 14px; background: rgba(0,240,255,0.03); padding: 1.6rem 1.5rem; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+    .svc-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,240,255,0.18); }
+    .svc-ic { font-size: 1.8rem; line-height: 1; }
+    .svc-card h3 { margin: 0.8rem 0 0.5rem; font-size: 1.08rem; font-weight: 700; }
+    .svc-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
     /* --- PROFILE CARD (About) --- */
     #about .content { max-width: 1100px; width: 100%; }
     .about-wrap {
@@ -600,6 +623,18 @@
 <body>
   <div id="loader"><span>Loading experience…</span></div>
 
+  <!-- Top navigation -->
+  <nav id="topnav">
+    <a class="brand" href="#hero">Made<b>ByLA</b></a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
   <!-- WebGL canvas -->
   <canvas id="webgl"></canvas>
 
@@ -610,7 +645,7 @@
     <section class="section" id="hero">
       <div class="content">
         <h1 class="hero-title anim">Made<br />by LA</h1>
-        <p class="hero-tagline anim">Creative Developer &amp; Designer</p>
+        <p class="hero-tagline anim">AI Creative &amp; Virtual Assistant — powered by AI</p>
       </div>
       <div class="scroll-hint">Scroll to explore ↓</div>
     </section>
@@ -643,11 +678,27 @@
       </div>
     </section>
 
+    <!-- SECTION: SERVICES -->
+    <section class="section" id="services">
+      <div class="content">
+        <div class="section-label anim">Services</div>
+        <h2 class="work-heading anim">What I can do for you</h2>
+        <div class="svc-grid anim">
+          <div class="svc-card"><div class="svc-ic">🖼️</div><h3>AI Image Enhancement &amp; Upscaling</h3><p>Low-res to crisp, high-quality. Product photos, portraits, and brand assets made sharper and cleaner using AI.</p></div>
+          <div class="svc-card"><div class="svc-ic">✨</div><h3>AI Image &amp; Video Creation</h3><p>Custom AI-generated images and short videos — scenes, concepts, and product visuals built from scratch.</p></div>
+          <div class="svc-card"><div class="svc-ic">🎬</div><h3>Video Editing</h3><p>Reels and short-form clips edited in CapCut — clean cuts, captions, and smooth transitions.</p></div>
+          <div class="svc-card"><div class="svc-ic">📦</div><h3>Product Listing &amp; Cross-Listing</h3><p>Adding and organizing products across your store or multiple marketplaces — accurate and consistent.</p></div>
+          <div class="svc-card"><div class="svc-ic">📝</div><h3>Descriptions &amp; SEO Titles</h3><p>Clear, compelling product descriptions and search-friendly titles that help buyers find your items.</p></div>
+          <div class="svc-card"><div class="svc-ic">💬</div><h3>Customer Support &amp; Orders</h3><p>Answering buyer questions and handling orders with care — backed by 8+ years in customer service.</p></div>
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 3: WORK / PORTFOLIO GALLERY -->
     <section class="section" id="work">
       <div class="content">
         <div class="section-label anim">Selected Work</div>
-        <h2 class="work-heading anim">AI Model &amp; Virtual Talent</h2>
+        <h2 class="work-heading anim">My work</h2>
         <p class="work-intro anim">
           A look behind the production. Each tile is a workflow set —
           hover to preview, click to view the final high-resolution photos and videos.
@@ -811,41 +862,65 @@
       return arr;
     }
 
-    function makeTorus(count, R, tube) {
+    // Spiral galaxy — points in a thin disk with curved arms
+    function makeGalaxy(count, radius) {
       var arr = new Float32Array(count * 3);
+      var arms = 4;
       for (var i = 0; i < count; i++) {
-        var u = Math.random() * Math.PI * 2; // around the ring
-        var vv = Math.random() * Math.PI * 2; // around the tube
-        var tr = tube * (0.7 + Math.random() * 0.3);
-        var x = (R + tr * Math.cos(vv)) * Math.cos(u);
-        var y = (R + tr * Math.cos(vv)) * Math.sin(u);
-        var z = tr * Math.sin(vv);
-        arr[i * 3] = x;
-        arr[i * 3 + 1] = y;
-        arr[i * 3 + 2] = z;
+        var t = Math.pow(Math.random(), 0.65);
+        var r = t * radius;
+        var arm = Math.floor(Math.random() * arms);
+        var ang = r * 2.3 + arm * (Math.PI * 2 / arms) + (Math.random() - 0.5) * 0.55;
+        arr[i * 3] = Math.cos(ang) * r;
+        arr[i * 3 + 1] = (Math.random() - 0.5) * 0.5 * (1 - t) + (Math.random() - 0.5) * 0.15;
+        arr[i * 3 + 2] = Math.sin(ang) * r;
       }
       return arr;
     }
 
-    function makeWave(count, size) {
+    // DNA-style double helix
+    function makeHelix(count, height, radius) {
       var arr = new Float32Array(count * 3);
-      var side = Math.ceil(Math.sqrt(count));
-      var step = size / side;
+      var turns = 3;
       for (var i = 0; i < count; i++) {
-        var ix = i % side;
-        var iz = Math.floor(i / side);
-        var x = (ix - side / 2) * step;
-        var z = (iz - side / 2) * step;
-        arr[i * 3] = x;
-        arr[i * 3 + 1] = 0; // wave displacement added at runtime
-        arr[i * 3 + 2] = z;
+        var f = i / count;
+        var ang = f * Math.PI * 2 * turns;
+        var y = (f - 0.5) * height;
+        if (i % 5 === 0) {
+          // rung connecting the two strands
+          var lp = (i % 10 === 0) ? Math.random() : -Math.random();
+          arr[i * 3] = Math.cos(ang) * radius * lp;
+          arr[i * 3 + 1] = y;
+          arr[i * 3 + 2] = Math.sin(ang) * radius * lp;
+        } else {
+          var strand = (i % 2 === 0) ? 0 : Math.PI;
+          arr[i * 3] = Math.cos(ang + strand) * radius;
+          arr[i * 3 + 1] = y;
+          arr[i * 3 + 2] = Math.sin(ang + strand) * radius;
+        }
+      }
+      return arr;
+    }
+
+    // Torus knot (p=2, q=3)
+    function makeKnot(count, scale) {
+      var arr = new Float32Array(count * 3);
+      var p = 2, q = 3, j = 0.14;
+      for (var i = 0; i < count; i++) {
+        var u = (i / count) * Math.PI * 2;
+        var r = Math.cos(q * u) + 2.2;
+        arr[i * 3] = (r * Math.cos(p * u)) * scale + (Math.random() - 0.5) * j;
+        arr[i * 3 + 1] = (r * Math.sin(p * u)) * scale + (Math.random() - 0.5) * j;
+        arr[i * 3 + 2] = (-Math.sin(q * u)) * scale * 1.6 + (Math.random() - 0.5) * j;
       }
       return arr;
     }
 
     var spherePos = makeSphere(COUNT, 3.0);
-    var torusPos = makeTorus(COUNT, 2.6, 1.0);
-    var wavePos = makeWave(COUNT, 11.0);
+    var galaxyPos = makeGalaxy(COUNT, 3.6);
+    var helixPos = makeHelix(COUNT, 6.2, 1.6);
+    var knotPos = makeKnot(COUNT, 1.15);
+    var SHAPES = [spherePos, galaxyPos, helixPos, knotPos];
 
     // ---------- Geometry ----------
     var geometry = new THREE.BufferGeometry();
@@ -887,7 +962,7 @@
     var morph = { value: 0 };
 
     gsap.to(morph, {
-      value: 2,
+      value: 3,
       ease: 'none',
       scrollTrigger: {
         trigger: '#scroll-container',
@@ -927,40 +1002,20 @@
       var elapsed = clock.getElapsedTime();
       var m = morph.value;
 
-      var t, fromA, toA;
-      var waveMix = 0;
-      if (m <= 1) {
-        t = m;               // sphere -> torus
-        fromA = spherePos;
-        toA = torusPos;
-      } else {
-        t = m - 1;           // torus -> wave
-        fromA = torusPos;
-        toA = wavePos;
-        waveMix = t;         // how "wave" we are (0..1)
-      }
+      var idx = Math.floor(m);
+      if (idx > SHAPES.length - 2) idx = SHAPES.length - 2;
+      if (idx < 0) idx = 0;
+      var t = m - idx;
+      var fromA = SHAPES[idx];
+      var toA = SHAPES[idx + 1];
       // smootherstep easing for the morph
       var e = t * t * (3 - 2 * t);
 
       for (var i = 0; i < COUNT; i++) {
         var i3 = i * 3;
-        var x = lerp(fromA[i3], toA[i3], e);
-        var y = lerp(fromA[i3 + 1], toA[i3 + 1], e);
-        var z = lerp(fromA[i3 + 2], toA[i3 + 2], e);
-
-        // Add flowing wave motion as we approach the wave shape
-        if (waveMix > 0) {
-          var wx = toA[i3];
-          var wz = toA[i3 + 2];
-          var d = Math.sqrt(wx * wx + wz * wz);
-          var displace = Math.sin(d * 0.9 - elapsed * 1.6) * 0.8
-                       + Math.sin(wx * 0.5 + elapsed * 1.2) * 0.4;
-          y += displace * waveMix;
-        }
-
-        pos[i3] = x;
-        pos[i3 + 1] = y;
-        pos[i3 + 2] = z;
+        pos[i3]     = lerp(fromA[i3],     toA[i3],     e);
+        pos[i3 + 1] = lerp(fromA[i3 + 1], toA[i3 + 1], e);
+        pos[i3 + 2] = lerp(fromA[i3 + 2], toA[i3 + 2], e);
       }
       geometry.attributes.position.needsUpdate = true;
 
