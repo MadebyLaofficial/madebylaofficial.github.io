@@ -478,7 +478,20 @@
     #topnav .nav-links { display: flex; gap: 1.8rem; }
     #topnav .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.25s ease; }
     #topnav .nav-links a:hover { color: var(--accent); }
-    @media (max-width: 700px) { #topnav .nav-links { display: none; } #topnav { padding: 0.9rem 7vw; } }
+    #nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.6rem; line-height: 1; cursor: pointer; pointer-events: auto; padding: 0.2rem 0.4rem; }
+    @media (max-width: 700px) {
+      #topnav { padding: 0.8rem 7vw; background: rgba(5, 8, 12, 0.92); backdrop-filter: blur(10px); }
+      #nav-toggle { display: block; }
+      #topnav .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0;
+        background: rgba(5, 8, 12, 0.97);
+        border-top: 1px solid rgba(0, 240, 255, 0.2);
+        padding: 0.4rem 0;
+      }
+      #topnav .nav-links.open { display: flex; }
+      #topnav .nav-links a { padding: 0.9rem 7vw; font-size: 0.9rem; }
+    }
 
     /* --- SERVICES --- */
     #services { align-items: center; text-align: center; min-height: 100vh; height: auto; padding-top: 14vh; padding-bottom: 14vh; }
@@ -625,7 +638,8 @@
   <!-- Top navigation -->
   <nav id="topnav">
     <a class="brand" href="#hero">Made<b>ByLA</b></a>
-    <div class="nav-links">
+    <button id="nav-toggle" type="button" aria-label="Menu">&#9776;</button>
+    <div class="nav-links" id="nav-links">
       <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#about">About</a>
@@ -1267,6 +1281,13 @@
     else { var ta=document.createElement('textarea'); ta.value=e; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(x){} document.body.removeChild(ta); done(); }
   }
   (function(){
+    // mobile hamburger menu
+    var navT=document.getElementById('nav-toggle');
+    var navL=document.getElementById('nav-links');
+    if(navT && navL){
+      navT.addEventListener('click', function(){ navL.classList.toggle('open'); });
+      navL.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navL.classList.remove('open'); }); });
+    }
     var gm=document.getElementById('gift-modal');
     if(gm){ gm.addEventListener('click', function(e){ if(e.target===gm) closeGift(); }); }
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeGift(); });
