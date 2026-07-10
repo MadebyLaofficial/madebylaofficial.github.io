@@ -516,6 +516,7 @@
       display: block;
       aspect-ratio: 1 / 1;
       object-fit: cover;
+      object-position: center top;
     }
     .profile-card__ph {
       width: 100%; aspect-ratio: 1/1;
@@ -524,16 +525,14 @@
       color: var(--muted); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
     }
     .profile-card__name {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 1.4rem 1.1rem 1rem;
-      background: linear-gradient(to top, rgba(3,8,11,0.95), transparent);
-      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+      padding: 0.9rem 1.1rem 1.3rem;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em; text-align: center;
     }
-    .profile-card__name span { display:block; font-weight:400; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-top:2px; }
-    .profile-tags { position:absolute; top:1rem; left:1rem; display:flex; flex-direction:column; gap:0.5rem; }
+    .profile-card__name span { display:block; font-weight:400; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-top:3px; }
+    .profile-tags { display:flex; flex-wrap:wrap; justify-content:center; gap:0.4rem; padding:0.9rem 0.8rem 0; }
     .profile-tags span {
-      background: rgba(3,8,11,0.72); border:1px solid rgba(0,240,255,0.3); backdrop-filter: blur(6px);
-      color: var(--text); font-size:0.68rem; letter-spacing:0.08em; padding:0.35rem 0.7rem; border-radius:999px;
+      background: rgba(0,240,255,0.08); border:1px solid rgba(0,240,255,0.3);
+      color: var(--text); font-size:0.68rem; letter-spacing:0.08em; padding:0.3rem 0.7rem; border-radius:999px;
     }
 
     /* --- FAQ --- */
