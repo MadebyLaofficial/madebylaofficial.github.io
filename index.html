@@ -202,6 +202,178 @@
     }
     @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
+    /* --- Section: FEATURED CASE STUDY (LUMINA) --- */
+    #featured {
+      align-items: center;
+      text-align: left;
+      min-height: 100vh;
+      height: auto;
+      padding-top: 14vh;
+      padding-bottom: 14vh;
+    }
+    #featured .content { max-width: 1100px; width: 100%; }
+
+    .featured-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 24px;
+      padding: 3rem;
+      pointer-events: auto;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+      overflow: hidden;
+    }
+    .featured-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 60px rgba(0, 240, 255, 0.22);
+    }
+    .featured-card__visual {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: #081014;
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      display: block;
+      text-decoration: none;
+    }
+    .featured-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+      filter: brightness(0.9) saturate(1.08);
+    }
+    .featured-card:hover .featured-card__img {
+      transform: scale(1.05);
+      filter: brightness(1) saturate(1.15);
+    }
+    .featured-card__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      margin-bottom: 1rem;
+    }
+    .featured-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      text-shadow: 0 0 35px rgba(0, 240, 255, 0.2);
+    }
+    .featured-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-top: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .featured-desc {
+      font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.8rem;
+    }
+    .featured-meta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .featured-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .featured-meta-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      opacity: 0.85;
+      font-weight: 600;
+    }
+    .featured-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .featured-tag {
+      background: rgba(0, 240, 255, 0.06);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      color: var(--text);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+    .featured-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      border-radius: 999px;
+      color: #04121a;
+      background: var(--accent);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 240, 255, 0.35);
+    }
+    .featured-btn:hover, .featured-btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 240, 255, 0.55);
+      background: #ffffff;
+      color: #04121a;
+    }
+    .featured-btn:focus-visible, .featured-card__visual:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+    @media (max-width: 960px) {
+      .featured-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+      }
+    }
+    @media (max-width: 640px) {
+      .featured-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 18px;
+      }
+      .featured-btn {
+        width: 100%;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .featured-card,
+      .featured-card__img,
+      .featured-btn {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+
     /* --- Section: WORK / PORTFOLIO GALLERY --- */
     #work {
       align-items: center;
@@ -641,6 +813,7 @@
     <button id="nav-toggle" type="button" aria-label="Menu">&#9776;</button>
     <div class="nav-links" id="nav-links">
       <a href="#services">Services</a>
+      <a href="#featured">Featured</a>
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#faq">FAQ</a>
@@ -705,6 +878,52 @@
           <div class="svc-card"><div class="svc-ic">🗂️</div><h3>Data Entry &amp; Organization</h3><p>Accurate data entry and organized records in spreadsheets — careful and consistent.</p></div>
           <div class="svc-card"><div class="svc-ic">📦</div><h3>Product Listing &amp; Descriptions</h3><p>I can help add and organize your product listings with clear, accurate descriptions. (Newly offering — sample work available.)</p></div>
         </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FEATURED CASE STUDY (LUMINA) -->
+    <section class="section" id="featured">
+      <div class="content">
+        <div class="section-label anim">Featured Case Study</div>
+        <article class="featured-card anim">
+          <a class="featured-card__visual" href="projects/LUMINA/website/index.html" aria-label="Open LUMINA™ Luxury Skincare Campaign case study website">
+            <img class="featured-card__img" src="projects/LUMINA/assets/hero-banner.jpg.png" alt="LUMINA™ Luxury Skincare Campaign master editorial hero banner showing Vitamin C Serum bottle, reflective water, and brand copy" loading="lazy" />
+          </a>
+          <div class="featured-card__info">
+            <div class="featured-card__badge">FEATURED</div>
+            <h2 class="featured-title">LUMINA™</h2>
+            <div class="featured-subtitle">Luxury Skincare Campaign</div>
+            <p class="featured-desc">
+              An editorial portfolio case study in branding, AI art direction, prompt engineering, and campaign design for a premium Vitamin C Serum. Built as a complete multi-touchpoint visual system.
+            </p>
+            <div class="featured-meta-group">
+              <div class="featured-meta-item">
+                <span class="featured-meta-label">Deliverables</span>
+                <div class="featured-tags">
+                  <span class="featured-tag">Hero Visual</span>
+                  <span class="featured-tag">Social Suite</span>
+                  <span class="featured-tag">Paid Media</span>
+                  <span class="featured-tag">Editorial Vignette</span>
+                  <span class="featured-tag">Brand System</span>
+                  <span class="featured-tag">AI Workflow</span>
+                </div>
+              </div>
+              <div class="featured-meta-item">
+                <span class="featured-meta-label">Tools &amp; Methods</span>
+                <div class="featured-tags">
+                  <span class="featured-tag">AI Image Generation</span>
+                  <span class="featured-tag">Midjourney</span>
+                  <span class="featured-tag">Magnific AI</span>
+                  <span class="featured-tag">Art Direction</span>
+                  <span class="featured-tag">Vanilla Web</span>
+                </div>
+              </div>
+            </div>
+            <a class="featured-btn" href="projects/LUMINA/website/index.html">
+              View Case Study <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -993,7 +1212,7 @@
       opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.15, delay: 0.3
     });
 
-    ['#about', '#contact'].forEach(function (sel) {
+    ['#about', '#featured', '#contact'].forEach(function (sel) {
       gsap.set(sel + ' .anim', { opacity: 0, y: 40 });
       gsap.to(sel + ' .anim', {
         opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12,
