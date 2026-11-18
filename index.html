@@ -873,6 +873,8 @@
     @media(hover:none){.work-card__cta{opacity:1;transform:none;}}
     @media(prefers-reduced-motion:reduce){#webgl,.interact-hint{display:none;} .anim,.work-card{opacity:1!important;transform:none!important;}}
 
+    .brand-wordmark { text-transform:none; color:var(--text); letter-spacing:normal; }
+    .brand-accent { color:var(--accent); }
   </style>
 </head>
 <body>
@@ -880,7 +882,7 @@
 
   <!-- Top navigation -->
   <nav id="topnav">
-    <a class="brand" href="#hero">Made<b>ByLA</b></a>
+    <a class="brand" href="#hero">Made<b>By</b>LA</a>
     <button id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">&#9776;</button>
     <div class="nav-links" id="nav-links">
       <a href="#featured">Featured</a>
@@ -901,7 +903,7 @@
     <!-- SECTION 1: HERO -->
     <section class="section" id="hero">
       <div class="content">
-        <p class="section-label anim">Made by LA · Independent portfolio</p>
+        <p class="section-label anim"><span class="brand-wordmark">Made<span class="brand-accent">By</span>LA</span> · Independent portfolio</p>
         <h1 class="hero-title anim">AI Creative &amp;<br />Virtual Assistant</h1>
         <p class="hero-tagline anim">AI-powered visuals and short-form videos, backed by a professional background in sales, customer service and technology.</p>
         <div class="links hero-cta anim"><a class="primary" href="#work">See my work</a><a href="#contact">Book a free chat</a></div>
@@ -1104,7 +1106,7 @@
         <div class="links anim" style="margin-top:1.1rem;">
           <a href="#" onclick="openGift();return false;" style="background:var(--accent);color:#ffffff;border-color:var(--accent);font-weight:700;">🎁 Request a Sample</a>
         </div>
-        <p class="footer-note">© 2026 Made by LA</p>
+        <p class="footer-note">© 2026 <span class="brand-wordmark">Made<span class="brand-accent">By</span>LA</span></p>
       </div>
     </section>
 
