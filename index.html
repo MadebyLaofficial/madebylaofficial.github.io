@@ -838,6 +838,41 @@
     .sb-play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:999px;background:var(--accent);color:#fff;font-size:1.4rem;place-items:center;box-shadow:0 10px 30px rgba(200,56,106,.4);transition:transform .3s ease}
     .sb-visual:hover .sb-play{transform:scale(1.08)}
     .featured-btn{border:none;cursor:pointer;font-family:inherit}
+  
+    /* MadeByLA refinement: original Sakura identity and project assets retained. */
+    :root { --muted:#73525f; }
+    html { scroll-padding-top: 84px; }
+    .section { min-height: auto; padding: clamp(64px,8vw,112px) max(7vw,24px); pointer-events:auto; }
+    .section .content { width:100%; margin-inline:auto; }
+    #hero { min-height: min(800px, 90svh); padding-top:120px; padding-bottom:90px; }
+    #hero .content { max-width:1100px; }
+    .hero-title { font-size:clamp(3.4rem,8vw,7.5rem); line-height:.98; text-shadow:none; max-width: 14ch; }
+    .hero-tagline { max-width:55ch; line-height:1.65; }
+    #featured,#storybook,#work,#services,#faq,#contact,#about,#process { min-height:0; padding-block:clamp(64px,8vw,112px); }
+    #featured .content,#storybook .content,#work .content,#services .content,#about .content,#process .content { max-width:1100px; }
+    .featured-card,.svc-card { background:rgba(255,255,255,.86); border-color:rgba(200,56,106,.17); box-shadow:0 10px 36px rgba(90,35,55,.06); }
+    .featured-title,.work-heading,.contact-title { text-shadow:none; }
+    .featured-card__img,.work-card__thumb { filter:none; }
+    .featured-card:hover .featured-card__img,.work-card:hover .work-card__thumb { filter:none; }
+    .about-text { font-family:'DM Sans',sans-serif; font-size:clamp(1rem,1.6vw,1.18rem); line-height:1.8; }
+    .section-label { letter-spacing:.16em; font-weight:700; }
+    .work-heading { font-size:clamp(2.4rem,5vw,4rem); }
+    .svc-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); }
+    #topnav { background:rgba(255,248,250,.94); border-bottom:1px solid rgba(200,56,106,.12); }
+    #topnav .nav-links { gap: clamp(.8rem,2vw,1.8rem); }
+    #gift-fab { animation:none; box-shadow:0 6px 22px rgba(120,30,60,.18); }
+    #loader { display:none; }
+    .work-card:focus-visible .work-card__cta,.work-card:focus-within .work-card__cta { opacity:1; transform:none; }
+    .email-row { flex-wrap:wrap; justify-content:center; max-width:100%; }
+    .email-row code { overflow-wrap:anywhere; }
+    .lb-stage { max-height:88dvh; overflow-y:auto; padding-top:48px; }
+    .lb-close { top:4px; }
+    .lb-media { max-height:60dvh; }
+    .lb-prev { left:2px; } .lb-next { right:2px; }
+    @media(max-width:760px){ #hero{min-height:75svh;padding-top:110px;} .hero-title{font-size:clamp(2.9rem,10vw,5rem);} .section{padding-inline:7vw;} .about-text{text-align:left;} .profile-card{flex-basis:auto;} .gift-card{max-height:85dvh;overflow-y:auto;} #gift-fab{right:12px;bottom:12px;font-size:.8rem;} }
+    @media(hover:none){.work-card__cta{opacity:1;transform:none;}}
+    @media(prefers-reduced-motion:reduce){#webgl,.interact-hint{display:none;} .anim,.work-card{opacity:1!important;transform:none!important;}}
+
   </style>
 </head>
 <body>
@@ -848,9 +883,9 @@
     <a class="brand" href="#hero">Made<b>ByLA</b></a>
     <button id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">&#9776;</button>
     <div class="nav-links" id="nav-links">
-      <a href="#services">Services</a>
       <a href="#featured">Featured</a>
       <a href="#work">Work</a>
+      <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
@@ -866,74 +901,15 @@
     <!-- SECTION 1: HERO -->
     <section class="section" id="hero">
       <div class="content">
-        <h1 class="hero-title anim">Made<br />by LA</h1>
-        <p class="hero-tagline anim">AI UGC ads and product visuals for online sellers, backed by 8+ years in customer service and reliable admin support.</p>
+        <p class="section-label anim">Made by LA · Independent portfolio</p>
+        <h1 class="hero-title anim">AI Creative &amp;<br />Virtual Assistant</h1>
+        <p class="hero-tagline anim">AI-powered visuals and short-form videos, backed by a professional background in sales, customer service and technology.</p>
         <div class="links hero-cta anim"><a class="primary" href="#work">See my work</a><a href="#contact">Book a free chat</a></div>
         <p class="interact-hint anim" id="interact-hint"></p>
       </div>
       <div class="scroll-hint">Scroll to explore ↓</div>
     </section>
 
-    <!-- SECTION 2: ABOUT / PROFILE -->
-    <section class="section" id="about">
-      <div class="content">
-        <div class="about-wrap">
-          <div class="about-copy">
-            <div class="section-label anim">About me</div>
-            <p class="about-text anim">
-              I'm Alberto (LA) — an <strong>AI content creator</strong> and
-              <strong>virtual assistant</strong>. I create AI images and short videos,
-              backed by <strong>8+ years in sales &amp; customer service</strong>.
-              Newly freelancing, reliable, and easy to work with — I treat every
-              project like it's my own.
-            </p>
-          </div>
-          <div class="profile-card anim">
-            <img src="assets/assetsprofile.jpg.png" data-fb="assets/profile.jpg,assets/profile.png,assets/profile.jpeg" alt="LA — Alberto Evangelista III" loading="lazy" onerror="imgFB(this)">
-            <div class="profile-card__ph" style="display:none;">Add your photo</div>
-            <div class="profile-tags">
-              <span>AI Creative</span>
-              <span>Video Editor</span>
-              <span>E-commerce VA</span>
-            </div>
-            <div class="profile-card__name">LA — Alberto Evangelista III<span>AI Creative &amp; Virtual Assistant</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: SERVICES -->
-    <section class="section" id="services">
-      <div class="content">
-        <div class="section-label anim">Services</div>
-        <h2 class="work-heading anim">What I can do for you</h2>
-        <div class="svc-grid anim">
-          <div class="svc-card"><div class="svc-ic">🖼️</div><h3>AI Image Enhancement &amp; Upscaling</h3><p>Low-res to crisp, high-quality. Product photos, portraits, and brand assets made sharper and cleaner using AI.</p></div>
-          <div class="svc-card"><div class="svc-ic">✨</div><h3>AI Images, Videos &amp; UGC-Style Ads</h3><p>Custom AI-generated images, short videos, and UGC-style product ads: scenes, hooks, and concepts built from scratch.</p></div>
-          <div class="svc-card"><div class="svc-ic">🎬</div><h3>Video Editing</h3><p>Reels and short-form clips edited in CapCut — clean cuts, captions, and smooth transitions.</p></div>
-          <div class="svc-card"><div class="svc-ic">💬</div><h3>Customer Support &amp; Admin</h3><p>Answering inquiries, handling orders, and admin tasks — backed by 8+ years in customer service.</p></div>
-          <div class="svc-card"><div class="svc-ic">🗂️</div><h3>Data Entry &amp; Organization</h3><p>Accurate data entry and organized records in spreadsheets — careful and consistent.</p></div>
-          <div class="svc-card"><div class="svc-ic">📦</div><h3>Product Listing &amp; Descriptions</h3><p>I can help add and organize your product listings with clear, accurate descriptions. (Newly offering — sample work available.)</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: HOW IT WORKS -->
-    <section class="section" id="process">
-      <div class="content">
-        <div class="section-label">How it works</div>
-        <h2 class="work-heading">Simple, clear, no surprises</h2>
-        <div class="svc-grid">
-          <div class="svc-card"><div class="step-num">1</div><h3>Free chat</h3><p>Tell me what you sell and what you need. I'll ask a few questions, no pressure.</p></div>
-          <div class="svc-card"><div class="step-num">2</div><h3>Plan and quote</h3><p>I send a simple plan, a timeline, and a fair quote before any work starts.</p></div>
-          <div class="svc-card"><div class="step-num">3</div><h3>Draft or trial</h3><p>I make your first draft, or we start with a small paid trial task.</p></div>
-          <div class="svc-card"><div class="step-num">4</div><h3>Revise and deliver</h3><p>You review, I refine, and you get clean, ready-to-post files.</p></div>
-        </div>
-        <p class="work-intro" style="margin-top:2rem">What I usually need from you: product photos or brand notes, a few examples you like, and your target customer.</p>
-      </div>
-    </section>
-
-    <!-- SECTION: FEATURED CASE STUDY (LUMINA) -->
     <section class="section" id="featured">
       <div class="content">
         <div class="section-label anim">Featured Case Study</div>
@@ -946,7 +922,7 @@
             <h2 class="featured-title">LUMINA™</h2>
             <div class="featured-subtitle">Luxury Skincare Campaign</div>
             <p class="featured-desc">
-              An editorial portfolio case study in branding, AI art direction, prompt engineering, and campaign design for a premium Vitamin C Serum. Built as a complete multi-touchpoint visual system.
+              A self-initiated editorial portfolio case study in branding, AI art direction, prompt engineering, and campaign design for a premium Vitamin C Serum. Built as a complete multi-touchpoint visual system.
             </p>
             <div class="featured-meta-group">
               <div class="featured-meta-item">
@@ -975,17 +951,16 @@
       </div>
     </section>
 
-    <!-- SECTION: FEATURED PROJECT (AI STORYBOOK) -->
     <section class="section" id="storybook">
       <div class="content">
         <div class="section-label anim">Featured Project</div>
         <article class="featured-card anim">
           <button class="featured-card__visual sb-visual" id="sb-visual" type="button" aria-label="Play Athena and the Lost Star">
-            <div class="sb-ph" style="display:none">Add your video</div>
+            <div class="sb-ph" style="display:none">Video currently unavailable</div>
             <span class="sb-play" style="display:none" aria-hidden="true">&#9654;</span>
           </button>
           <div class="featured-card__info">
-            <div class="featured-card__badge">AI PRODUCT CONCEPT</div>
+            <div class="featured-card__badge">SELF-INITIATED AI PRODUCT CONCEPT</div>
             <h2 class="featured-title">Personalized AI Storybook Video</h2>
             <div class="featured-subtitle">Turning Children's Photos into Magical Animated Stories.</div>
             <p class="featured-desc">An AI-powered digital product concept that transforms a child's photo into a personalized animated storybook. From character design and storytelling to AI-generated animation, narration, and final video production, I developed the concept from scratch into a complete product demonstration.</p>
@@ -1017,21 +992,74 @@
       </div>
     </section>
 
-    <!-- SECTION 3: WORK / PORTFOLIO GALLERY -->
     <section class="section" id="work">
       <div class="content">
         <div class="section-label anim">Selected Work</div>
-        <h2 class="work-heading anim">My work</h2>
+        <h2 class="work-heading anim">Selected work</h2>
         <p class="work-intro anim">
           A look behind the production. Each tile is a workflow set —
-          hover to preview, click to view the final high-resolution photos and videos.
+          select a project to explore the available photos and videos.
         </p>
         <div class="work-filters anim" id="work-filters"></div>
         <div class="work-grid" id="work-grid"><!-- cards injected by JS --></div>
       </div>
     </section>
 
-    <!-- SECTION: FAQ -->
+    <section class="section" id="services">
+      <div class="content">
+        <div class="section-label anim">Services</div>
+        <h2 class="work-heading anim">Creative &amp; business support</h2>
+        <div class="svc-grid anim">
+          <div class="svc-card"><div class="svc-ic">🖼️</div><h3>AI Image Enhancement &amp; Upscaling</h3><p>Low-res to crisp, high-quality. Product photos, portraits, and brand assets made sharper and cleaner using AI.</p></div>
+          <div class="svc-card"><div class="svc-ic">✨</div><h3>AI Images, Videos &amp; UGC-Style Ads</h3><p>Custom AI-generated images, short videos, and UGC-style product ads: scenes, hooks, and concepts built from scratch.</p></div>
+          <div class="svc-card"><div class="svc-ic">🎬</div><h3>Video Editing</h3><p>Reels and short-form clips edited in CapCut — clean cuts, captions, and smooth transitions.</p></div>
+          <div class="svc-card"><div class="svc-ic">💬</div><h3>Customer Support &amp; Admin</h3><p>Customer inquiries, product recommendations and after-sales support. My background also includes responding to messages on a company Facebook page.</p></div>
+          <div class="svc-card"><div class="svc-ic">🗂️</div><h3>Data Entry &amp; Organization</h3><p>Developing practical spreadsheet and data entry skills, supported by experience in application processing and inventory handling.</p></div>
+          <div class="svc-card"><div class="svc-ic">📦</div><h3>Product Listing &amp; Descriptions</h3><p>Developing product listing and description-writing skills through learning and practice.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="content">
+        <div class="about-wrap">
+          <div class="about-copy">
+            <div class="section-label anim">About me</div>
+            <p class="about-text anim">
+              I'm Alberto (LA) — an <strong>AI content creator</strong> and
+              <strong>virtual assistant</strong>. I create AI images and short videos,
+              backed by <strong>8+ years in sales &amp; customer service</strong>.
+              My background includes product consultation, after-sales support, online customer inquiries and technical troubleshooting. I am building my freelance career through self-initiated creative projects and developing virtual assistance skills.
+            </p>
+          </div>
+          <div class="profile-card anim">
+            <img src="assets/assetsprofile.jpg.png" data-fb="assets/profile.jpg,assets/profile.png,assets/profile.jpeg" alt="LA — Alberto Evangelista III" loading="lazy" onerror="imgFB(this)">
+            <div class="profile-card__ph" style="display:none;">Profile image unavailable</div>
+            <div class="profile-tags">
+              <span>AI Creative</span>
+              <span>Video Editor</span>
+              <span>E-commerce VA</span>
+            </div>
+            <div class="profile-card__name">LA — Alberto Evangelista III<span>AI Creative &amp; Virtual Assistant</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="content">
+        <div class="section-label">How it works</div>
+        <h2 class="work-heading">Simple, clear, no surprises</h2>
+        <div class="svc-grid">
+          <div class="svc-card"><div class="step-num">1</div><h3>Free chat</h3><p>Tell me about your business or project and what you need. I'll clarify the scope before we begin.</p></div>
+          <div class="svc-card"><div class="step-num">2</div><h3>Plan and quote</h3><p>I send a simple plan, a timeline, and a clear project-based quote before any work starts.</p></div>
+          <div class="svc-card"><div class="step-num">3</div><h3>Draft or trial</h3><p>I make your first draft, or we start with a small paid trial task.</p></div>
+          <div class="svc-card"><div class="step-num">4</div><h3>Revise and deliver</h3><p>You review, I refine, and you get clean, ready-to-post files.</p></div>
+        </div>
+        <p class="work-intro" style="margin-top:2rem">What I usually need from you: product photos or brand notes, a few examples you like, and your target customer.</p>
+      </div>
+    </section>
+
     <section class="section" id="faq">
       <div class="content">
         <div class="section-label anim">FAQ</div>
@@ -1043,7 +1071,7 @@
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button">Do you have experience?<span class="faq-ic">+</span></button>
-            <div class="faq-a"><p>I have 8+ years in sales and customer service, so I know how to handle buyers and client needs. I'm newly offering AI content and VA services, and I have sample work to show my skills. I take every project seriously and I'm happy to start with a paid trial task.</p></div>
+            <div class="faq-a"><p>My professional background is in sales and customer service across retail, finance and technology. I am building freelance experience in AI creative work and virtual assistance. My self-initiated portfolio projects demonstrate my creative skills. I am open to a scoped paid trial task.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button">What tools do you use?<span class="faq-ic">+</span></button>
@@ -1055,13 +1083,12 @@
           </div>
           <div class="faq-item">
             <button class="faq-q" type="button">What are your rates?<span class="faq-ic">+</span></button>
-            <div class="faq-a"><p>Flexible and project-based. Message me and I'll give a fair quote — friendly rates for first-time clients.</p></div>
+            <div class="faq-a"><p>Pricing is project-based and depends on the scope, deliverables and timeline. We can agree on a quote before work begins.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 5: CONTACT / SOCIALS -->
     <section class="section" id="contact">
       <div class="content">
         <h2 class="contact-title anim">Let's Connect!</h2>
@@ -1076,7 +1103,7 @@
           <a href="https://www.linkedin.com/in/madebyla/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
         <div class="links anim" style="margin-top:1.1rem;">
-          <a href="#" onclick="openGift();return false;" style="background:var(--accent);color:#ffffff;border-color:var(--accent);font-weight:700;">🎁 Claim your free gift</a>
+          <a href="#" onclick="openGift();return false;" style="background:var(--accent);color:#ffffff;border-color:var(--accent);font-weight:700;">🎁 Request a Sample</a>
         </div>
         <p class="footer-note">© 2026 Made by LA</p>
       </div>
@@ -1085,7 +1112,7 @@
   </div>
 
   <!-- LIGHTBOX (hidden until a work card is clicked) -->
-  <div id="lightbox" aria-hidden="true">
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Project preview" aria-hidden="true">
     <div class="lb-stage">
       <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
       <div class="lb-media-wrap">
@@ -1103,15 +1130,15 @@
   </div>
 
   <!-- Floating gift button -->
-  <button id="gift-fab" type="button" onclick="openGift()">🎁 Free Gift</button>
+  <button id="gift-fab" type="button" onclick="openGift()">🎁 Request a Sample</button>
 
   <!-- Gift / offer modal -->
-  <div id="gift-modal" aria-hidden="true">
+  <div id="gift-modal" role="dialog" aria-modal="true" aria-label="Sample request" aria-hidden="true">
     <div class="gift-card">
       <button class="gift-close" type="button" onclick="closeGift()" aria-label="Close">&times;</button>
       <div class="gift-badge">A gift for you</div>
-      <h3>Hire me this month — get a free bonus 🎁</h3>
-      <p>Book a free discovery chat this month and get a <b>free set of AI-enhanced sample visuals</b> for your brand or products. No pressure — let's see if we're a fit.</p>
+      <h3>Request a complimentary sample</h3>
+      <p>Request a discovery chat to discuss a <b>complimentary AI-enhanced sample visual</b> for your brand or products. We will agree on the sample scope first.</p>
       <div class="gift-opts">
         <a class="gift-opt" href="https://wa.me/639245827567" target="_blank" rel="noopener">
           <div class="gift-opt__ic">💬</div>
@@ -1122,7 +1149,7 @@
           <div><div class="gift-opt__t">Send a message</div><div class="gift-opt__m">Email me</div></div>
         </a>
       </div>
-      <div class="gift-scarcity">Free, friendly, and no obligation.</div>
+      <div class="gift-scarcity">Sample scope and availability will be confirmed before production.</div>
     </div>
   </div>
 
@@ -1138,13 +1165,14 @@
   (function () {
     'use strict';
 
-    gsap.registerPlugin(ScrollTrigger);
+    var canAnimate = !!(window.gsap && window.ScrollTrigger) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (canAnimate) gsap.registerPlugin(ScrollTrigger);
 
     // ---------- Config ----------
     var ACCENT = 0x00f0ff;
     var isMobile = window.innerWidth < 768;
     // Fewer particles on mobile for performance
-    var COUNT = isMobile ? 1800 : 3600;
+    var COUNT = isMobile ? 900 : 2400;
 
     var canvas = document.getElementById('webgl');
     var loader = document.getElementById('loader');
@@ -1173,13 +1201,14 @@
     });
     try {
 
+    if (!canAnimate || !window.THREE) throw new Error("Animation disabled");
     // ---------- Renderer ----------
     var renderer = new THREE.WebGLRenderer({
       canvas: canvas,
       antialias: !isMobile,
       alpha: true
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // ---------- Scene & Camera ----------
@@ -1383,6 +1412,7 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      if (document.hidden) return;
       var elapsed = reduceMotion ? 0 : clock.getElapsedTime();
       material.uniforms.uTime.value = elapsed;
       var sy = window.scrollY, vh = window.innerHeight;
@@ -1428,7 +1458,7 @@
       var w = window.innerWidth, h = window.innerHeight;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
       renderer.setSize(w, h);
       material.uniforms.uScale.value = renderer.domElement.height * 0.5;
       material.uniforms.uAspect.value = w / h;
@@ -1448,6 +1478,9 @@
     } catch (err) {
       console.warn('WebGL unavailable, using static background.', err);
       loader.classList.add('hidden');
+      canvas.style.display='none';
+      if (hint) hint.textContent='';
+      document.querySelectorAll('.anim').forEach(function(el){el.style.opacity='1';el.style.transform='none';});
     }
 
     /* =====================================================================
@@ -1590,7 +1623,7 @@
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', 'Open ' + work.title);
         var badge = hasVideo(work) ? '<div class="work-card__badge">\u25B6 Video</div>' : '';
-        card.innerHTML = '<div class="work-card__placeholder">Add image</div>' + thumbHTML(work) + badge +
+        card.innerHTML = '<div class="work-card__placeholder">Preview unavailable</div>' + thumbHTML(work) + badge +
           '<div class="work-card__cta">View \u2192</div>' +
           '<div class="work-card__overlay"><div class="work-card__title">' + work.title + '</div><div class="work-card__meta">' + work.meta + '</div></div>';
         card.addEventListener('click', function () { openLightbox(index, 0); });
@@ -1614,8 +1647,8 @@
         b.addEventListener('click', function () {
           filterBar.querySelectorAll('.work-filter').forEach(function (x) { x.classList.toggle('active', x === b); });
           var cards = buildCards(c);
-          gsap.fromTo(cards, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out' });
-          ScrollTrigger.refresh();
+          if (canAnimate) gsap.fromTo(cards, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out' });
+          if (canAnimate) ScrollTrigger.refresh();
         });
         filterBar.appendChild(b);
       });
@@ -1623,6 +1656,7 @@
     buildCards('all');
 
     // ---- Reveal cards + headings on scroll ----
+    if (canAnimate) {
     gsap.set('#work .anim', { opacity: 0, y: 40 });
     gsap.to('#work .anim', {
       opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.1,
@@ -1636,6 +1670,7 @@
       }
     });
 
+    }
     // ---- Lightbox ----
     var lb = document.getElementById('lightbox');
     var lbSlot = document.getElementById('lb-media-slot');
@@ -1765,7 +1800,7 @@
       if (btn) btn.addEventListener('click', function () { openWork('storybook'); });
     })();
     lbNext.addEventListener('click', nextMedia);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    if (canAnimate && document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     lbPrev.addEventListener('click', prevMedia);
     lbClose.addEventListener('click', closeLightbox);
     lb.addEventListener('click', function (e) {
@@ -1788,8 +1823,8 @@
   function copyEmail(){
     var e='laventuresofficialph@gmail.com';
     var done=function(){ var t=document.getElementById('copy-toast'); t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 1600); };
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(e).then(done).catch(done); }
-    else { var ta=document.createElement('textarea'); ta.value=e; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(x){} document.body.removeChild(ta); done(); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(e).then(done).catch(function(){ alert('Copy unavailable. Please select the email address manually.'); }); }
+    else { var ta=document.createElement('textarea'); ta.value=e; document.body.appendChild(ta); ta.select(); var ok=false; try{ ok=document.execCommand('copy'); }catch(x){} document.body.removeChild(ta); if(ok) done(); else alert('Copy unavailable. Please select the email address manually.'); }
   }
   (function(){
     // mobile hamburger menu
@@ -1797,18 +1832,19 @@
     var navL=document.getElementById('nav-links');
     if(navT && navL){
       navT.addEventListener('click', function(){ navT.setAttribute('aria-expanded', navL.classList.toggle('open')); });
-      navL.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navL.classList.remove('open'); }); });
+      navL.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navL.classList.remove('open'); navT.setAttribute('aria-expanded','false'); }); });
     }
     var gm=document.getElementById('gift-modal');
     if(gm){ gm.addEventListener('click', function(e){ if(e.target===gm) closeGift(); }); }
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeGift(); });
     document.querySelectorAll('.faq-q').forEach(function(btn){
+      btn.setAttribute('aria-expanded','false');
       btn.addEventListener('click', function(){
         var item=btn.parentElement;
         var ans=item.querySelector('.faq-a');
         var isOpen=item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(function(o){ o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight=null; });
-        if(!isOpen){ item.classList.add('open'); ans.style.maxHeight=ans.scrollHeight+'px'; }
+        document.querySelectorAll('.faq-item.open').forEach(function(o){ o.classList.remove('open'); o.querySelector('.faq-q').setAttribute('aria-expanded','false'); o.querySelector('.faq-a').style.maxHeight=null; });
+        if(!isOpen){ btn.setAttribute('aria-expanded','true'); item.classList.add('open'); ans.style.maxHeight=ans.scrollHeight+'px'; }
       });
     });
   })();
